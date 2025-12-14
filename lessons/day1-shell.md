@@ -18,7 +18,10 @@ user1@vm-corso-colonna:\~$
 
 Type a command at the prompt (do not type the prompt) and send the command with Enter  
 
-```user1@vm-corso-colonna:\~$ echo focaccia al pomodoro  ```
+```user1@vm-corso-colonna:\~$ echo focaccia al pomodoro  
+user1@vm-corso-colonna:~$ echo focaccia al pomodoro 
+focaccia al pomodoro
+```
 
 ```
 user1@vm-corso-colonna:\~$ ls  
