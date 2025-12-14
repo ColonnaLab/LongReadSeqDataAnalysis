@@ -39,7 +39,9 @@ Required material [here](https://datacarpentry.github.io/genomics-workshop/) Opt
 <span style="color: rgb(0, 0, 255);">This text is blue (rgb)</span>
 <p style="color: purple;">This entire paragraph is purple</p>
 
-markdown```diff
+markdown
+
+```diff
 + This line is green
 - This line is red
 ! This line is orange (GitLab only)
