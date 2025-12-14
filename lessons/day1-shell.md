@@ -146,7 +146,7 @@ user1@vm-corso-colonna:~/shell-lesson-data$ pwd
 
 **2a. General Syntax of a Shell Command**
 
-![../img/SC-syntax.png][image1]
+![syntax](../img/SC-syntax.png)
 
 **Options (also referred as switches or flags)** change the behavior of a command  
 single dash (-) short options  
