@@ -28,9 +28,11 @@ ks: command not found
 
 **2. Navigating Files and Directories**
 
-The part of the operating system responsible for managing files and directories is called the file system. It organizes our data into files, which hold information, and directories (also called ‘folders’), which hold files or other directories.
+- File system: the part of the operating system responsible for managing files and directories. It organizes our data into files, which hold information, and directories (also called ‘folders’), which hold files or other directories.
 
-COMMAND: pwd which stands for ‘print working directory
+``` diff 
++ COMMAND: **pwd** which stands for print working directory
+ ```
 
 user1@vm-corso-colonna:\~$ pwd   
 /home/user1
