@@ -5,25 +5,22 @@ This page contain a short and adapted version of the Software Carpentry lesson [
 **Shell and prompt ($)**
 
 - Graphical user interface (GUI) versus command line interface (CLI)
-- The most popular Unix shell is Bash (the Bourne Again SHell — so-called because it’s derived from a shell written by [Stephen Bourne](https://en.wikipedia.org/wiki/Stephen_R._Bourne)). 
-- Instructions to computer through shell are given as text  in commands or sequences of commands (scripts) improving the reproducibility of workflows.
-- The command line is necessary to interact with remote machines and supercomputers.
+- The most popular Unix shell is Bash (the Bourne Again SHell — so-called because it’s derived from a shell written by [Stephen Bourne](https://en.wikipedia.org/wiki/Stephen_R._Bourne))
+- Instructions to computer through shell are given as text in commands (followed by `Enter`) or sequences of commands (scripts) 
+- The command line is necessary to interact with remote machines and supercomputers
 - Raw sequence data can only be analyzed on super computers
 
 ```diff
 + the prompt symbol $. Prompt might look different  than \$. 
-
 user1@vm-corso-colonna:\~$
 ```
 
-Type a command at the prompt (do not type the prompt) and send the command with Enter  
+Type a command at the prompt (do not type the prompt) and send the command with `Enter`
 
-```user1@vm-corso-colonna:\~$ echo focaccia al pomodoro  
+```diff
 user1@vm-corso-colonna:~$ echo focaccia al pomodoro 
 focaccia al pomodoro
-```
 
-```
 user1@vm-corso-colonna:\~$ ls  
 Shell-lesson-data
 
@@ -33,35 +30,83 @@ ks: command not found
 
 **2. Navigating Files and Directories**
 
-- File system: the part of the operating system responsible for managing files and directories. It organizes our data into files, which hold information, and directories (also called ‘folders’), which hold files or other directories.
+- File system: the part of the operating system responsible for managing files and directories.
+		 It organizes our data into files, which hold information, and directories (also called ‘folders’), which hold files or other directories.
 
 ``` diff 
-+ COMMAND - pwd -  print working directory
++ COMMAND  pwd stands for print working directory
  ```
 
 user1@vm-corso-colonna:\~$ pwd   
 /home/user1
 
-**/  root**   
+**root (/)**
+
+```diff
++ Root (/) is the top-level directory in a Unix/Linux filesystem hierarchy:
+
 user1@vm-corso-colonna:\~$ cd /  
 user1@vm-corso-colonna:/$ pwd  
-/  
-user1@vm-corso-colonna:/$ ls   
-bin  boot  data  dev  etc  home  lib  lib32  lib64  libx32  lost+found  media  mnt  opt  proc  root  run  sbin  snap  srv  sys  tmp  usr  var
+user1@vm-corso-colonna:/
+│
+├── bin/
+├── boot/
+├── data/
+├── dev/
+├── etc/
+├── home/
+│   └── user1/      # Your home directory (~)
+├── lib/
+├── lib32/
+├── lib64/
+├── libx32/
+├── lost+found/
+├── media/
+├── mnt/
+├── opt/
+├── proc/
+├── root/
+├── run/
+├── sbin/
+├── snap/
+├── srv/
+├── sys/
+├── tmp/
+├── usr/
+└── var/
 
-user1@vm-corso-colonna:/$ ls   
-bin  boot  data  dev  etc  home  lib  lib32  lib64  libx32  lost+found  media  mnt  opt  proc  root  run  sbin  snap  srv  sys  tmp  usr  var
+```
 
-COMMAND: ls stands for list directory contents
+```
+user1@vm-corso-colonna:~
+│
+└─── shell-lesson-data/
+     │
+     └─── exercise-data/
+          ├─── alkanes/         [DIR]
+          ├─── animal-counts/   [DIR]
+          ├─── creatures/       [DIR]
+          ├─── numbers.txt      [FILE]
+          ├─── project/         [DIR]
+          └─── writing/         [DIR]
+```
+
+
+``` diff 
++ COMMAND ls stands for list directory contents
 
 user1@vm-corso-colonna:\~$ ls  
 Shell-lesson-data
+```
 
-COMMAND: \--help and man: learning about command options 
 
-$ ls \--help
+``` diff 
++ COMMAND use --help and man  learning about command options 
 
-$ man ls
+user1@vm-corso-colonna:\~$  ls \--help
+
+user1@vm-corso-colonna:\~$  man ls
+```
 
 Exploring Other Directories
 
@@ -72,7 +117,9 @@ user1   user11  user13  user15  user17  user19  user20  user22  user24  user26  
 user1@vm-corso-colonna:\~$ ls shell-lesson-data/  
 exercise-data  north-pacific-gyre
 
-COMMAND: cd stands for Change the shell working directory.
+
+``` diff 
++ COMMAND -cd stands for Change the shell working directory 
 
 user1@vm-corso-colonna:\~$ cd shell-lesson-data  
 user1@vm-corso-colonna:\~/shell-lesson-data$ cd ..   
