@@ -289,3 +289,97 @@ LittleWomen.txt  haiku.txt  thesis
 
 * **Deleting Is Forever**
 
+### **4. Pipes and Filters**
+
+```diff
+! EXERCISE: See where we are with $pwv and return to  shell-lesson-data/exercise-data/
+```
+
+``` diff 
++ COMMAND wc is the ‘word count’ command: it counts the number of lines, words, and characters in files (returning the values in that order from left to right)
+
+user1@vm-corso-colonna:~/shell-lesson-data/exercise-data/alkanes$  wc cubane.pdb
+  20  156 1158 cubane.pdb
+```
+
+``` diff 
++ COMMAND the wildcard * is a glob pattern that matches zero or more characters in file and directory names
+
+user1@vm-corso-colonna:~/shell-lesson-data/exercise-data/alkanes$ wc *.pdb 
+  20  156 1158 cubane.pdb
+  12   84  622 ethane.pdb
+   9   57  422 methane.pdb
+  30  246 1828 octane.pdb
+  21  165 1226 pentane.pdb
+  15  111  825 propane.pdb
+ 107  819 6081 total
+```
+
+
+``` diff 
++ COMMAND the option  -l shows only the number of lines per file
+
+user1@vm-corso-colonna:~/shell-lesson-data/exercise-data/alkanes$ wc -l *.pdb
+  20 cubane.pdb
+  12 ethane.pdb
+   9 methane.pdb
+  30 octane.pdb
+  21 pentane.pdb
+  15 propane.pdb
+ 107 total
+```
+##### **4a. Capturing output from commands**
+
+```diff
+! EXERCISE: Which of the files in /home/user1/shell-lesson-data/exercise-data/alkanes contains the fewest lines? 
+```
+
+
+``` diff 
++ COMMAND the symbol  > tells the shell to redirect the command’s output to a file instead of printing it to the screen
+
+user1@vm-corso-colonna:~/shell-lesson-data/exercise-data/alkanes$ wc -l *.pdb > lengths.txt
+user1@vm-corso-colonna:~/shell-lesson-data/exercise-data/alkanes$ ls 
+cubane.pdb  ethane.pdb  lengths.txt  methane.pdb  octane.pdb  pentane.pdb  propane.pdb
+```
+
+``` diff 
++ COMMAND  cat gets its name from ‘concatenate’ i.e. join together, and it prints the contents of files one after another. If there is only one file, it just shows what it contains
+
+user1@vm-corso-colonna:~/shell-lesson-data/exercise-data/alkanes$  cat lengths.txt
+  20 cubane.pdb
+  12 ethane.pdb
+   9 methane.pdb
+  30 octane.pdb
+  21 pentane.pdb
+  15 propane.pdb
+ 107 total
+```
+
+``` diff 
++ COMMAND sort is used to  sort lines of text files
+
+user1@vm-corso-colonna:~/shell-lesson-data/exercise-data/alkanes$  sort lengths.txt
+   9 methane.pdb
+  12 ethane.pdb
+  15 propane.pdb
+  20 cubane.pdb
+  21 pentane.pdb
+  30 octane.pdb
+ 107 total
+
+
++ the -r option sorts in reverse order
+
+user1@vm-corso-colonna:~/shell-lesson-data/exercise-data/alkanes$ sort -r  lengths.txt 
+ 107 total
+  30 octane.pdb
+  21 pentane.pdb
+  20 cubane.pdb
+  15 propane.pdb
+  12 ethane.pdb
+   9 methane.pdb
+```
+
+##### **4b Passing output to another command**
+
