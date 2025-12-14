@@ -159,7 +159,7 @@ user1@vm-corso-colonna:~/shell-lesson-data$ pwd
 
 + **Parameters:**  options and arguments .
 
-+ Space* Each part is separated by spaces. If you omit the space between ls and \-F the shell will look for a command called ls-F, which doesn’t exist  
++ *Space* Each part is separated by spaces. If you omit the space between ls and \-F the shell will look for a command called ls-F, which doesn’t exist  
 + *Capitalization*
 		ls \-s will display the size of files and directories alongside the names   
 		ls \-S will sort the files and directories by size
@@ -230,8 +230,11 @@ data/  results/
 ! EXERCISE: See where we are with $pwd  and move to  `thesis` see what it contains 
 ```
 
-user1@vm-corso-colonna:~/shell-lesson-data/exercise-data/writing/thesis$ ls  
+```
++ Text editors are programs used to create, view, and modify plain text files directly from the command line.
+
 user1@vm-corso-colonna:~/shell-lesson-data/exercise-data/writing/thesis$ nano draft.txt
+```
 
 * **Control, Ctrl, or ^ Key**  
 * **File names and extensions** 
@@ -383,3 +386,18 @@ user1@vm-corso-colonna:~/shell-lesson-data/exercise-data/alkanes$ sort -r  lengt
 
 ##### **4b Passing output to another command**
 
+``` diff 
++ vertical bar, |, between the two commands is called a pipe. It tells the shell that we want to use the output of the command on the left as the input to the command on the right.
+
++ COMMAND  head - output the first part of files
++ using the option -n it is possible to specify how many lines we want to print 
+
+user1@vm-corso-colonna:~/shell-lesson-data/exercise-data/alkanes$ sort  lengths.txt | head -n 3
+   9 methane.pdb
+  12 ethane.pdb
+  15 propane.pdb
+```
+
+![pipe](../img/piperedirect.png)
+
+>> Go to the [CHALLENGES](https://swcarpentry.github.io/shell-novice/04-pipefilter.html) of the SC lesson __Pipe Reading Comprehension
