@@ -34,13 +34,14 @@ Download and install the free Desktop version of [Rstudio](https://www.rstudio.c
 [Genomics](https://datacarpentry.org/lessons/#genomics)
 Required material [here](https://datacarpentry.github.io/genomics-workshop/) Option B: Using the lessons on your local machine
 
+<span style="color: red;">This text is red</span>
+<span style="color: #00ff88;">This text is green (hex)</span>
+<span style="color: rgb(0, 0, 255);">This text is blue (rgb)</span>
+<p style="color: purple;">This entire paragraph is purple</p>
 
-<!-- Works in GitHub -->
-<kbd>Keyboard style</kbd>
-<ins>Underlined text</ins>
-<mark>Highlighted text</mark>
-
-<!-- Color boxes (not text, but useful) -->
-![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `#f03c15 Red`
-![#c5f015](https://via.placeholder.com/15/c5f015/000000?text=+) `#c5f015 Green`
-![#1589F0](https://via.placeholder.com/15/1589F0/000000?text=+) `#1589F0 Blue`
+markdown```diff
++ This line is green
+- This line is red
+! This line is orange (GitLab only)
+# This line is gray
+```
