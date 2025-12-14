@@ -10,7 +10,7 @@ This page contain a short and adapted version of the Software Carpentry lesson [
 - The command line is necessary to interact with remote machines and supercomputers.
 - Raw sequence data can only be analyzed on super computers
 
-+ Familiarize with the command line interface and with the prompt symbol (\$). Prompt might look different  than \$. 
+Familiarize with the command line interface and with the prompt symbol (\$). Prompt might look different  than \$. 
 
 ```user1@vm-corso-colonna:\~$```
 
