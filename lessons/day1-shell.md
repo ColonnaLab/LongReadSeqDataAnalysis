@@ -148,9 +148,10 @@ user1@vm-corso-colonna:~/shell-lesson-data$ pwd
 
 ![syntax](../img/SC-syntax.png)
 
-**Options (also referred as switches or flags)** change the behavior of a command  
-single dash (-) short options  
-two dashes (--) long options
+
++ Options (also referred as switches or flags)** change the behavior of a command  
+		single dash (-) short options  
+		two dashes (--) long options
 
 **Arguments** tell the command what to operate on (e.g. files and directories). 
 
