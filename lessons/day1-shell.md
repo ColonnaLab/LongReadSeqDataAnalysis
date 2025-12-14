@@ -44,6 +44,8 @@ user1@vm-corso-colonna:\~$ pwd
 
 ```diff
 + Root (/) is the top-level directory in a Unix/Linux filesystem hierarchy:
++ \~ means home, your space in the filesystem 
++ \~$ means you are at the prompt in your home directory 
 
 user1@vm-corso-colonna:\~$ cd /  
 user1@vm-corso-colonna:/$ pwd  
@@ -55,7 +57,7 @@ user1@vm-corso-colonna:/
 ├── dev/
 ├── etc/
 ├── home/
-│   └── user1/      # Your home directory (~)
++│   └── user1/      # Your home directory (~)
 ├── lib/
 ├── lib32/
 ├── lib64/
@@ -114,12 +116,10 @@ user1@vm-corso-colonna:\~$ ls  /home
 ubuntu  user10  user12  user14  user16  user18  user2   user21  user23  user25  user27  user29  user30  user32  user34  user4  user6  user8  
 user1   user11  user13  user15  user17  user19  user20  user22  user24  user26  user28  user3   user31  user33  user35  user5  user7  user9
 
-user1@vm-corso-colonna:\~$ ls shell-lesson-data/  
-exercise-data  north-pacific-gyre
 
 
 ``` diff 
-+ COMMAND -cd stands for Change the shell working directory 
++ COMMAND  cd stands for change the shell working directory 
 
 user1@vm-corso-colonna:\~$ cd shell-lesson-data  
 user1@vm-corso-colonna:\~/shell-lesson-data$ cd ..   
