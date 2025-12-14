@@ -1,24 +1,32 @@
-**1\. Introducing the Shell**
+**1. Introducing the Shell**
+This page contain a short and adapted version of the Software Carpentry lesson [The shell](https://swcarpentry.github.io/shell-novice/). We will use it as notes to key concepts we will discuss during our lesson. 
 
-**$  prompt**   
+
+**Shell and prompt ($)**
+
+- Graphical user interface (GUI) versus command line interface (CLI)
+- The most popular Unix shell is Bash (the Bourne Again SHell — so-called because it’s derived from a shell written by [Stephen Bourne](https://en.wikipedia.org/wiki/Stephen_R._Bourne)). 
+- Instructions to computer through shell are given as text  in commands or sequences of commands (scripts) improving the reproducibility of workflows.
+- The command line is necessary to interact with remote machines and supercomputers.
+- Raw sequence data can only be analyzed on super computers
+
+Familiarize with the command line interface and with the prompt symbol ($). Prompt might look different  than $. 
 
 ```user1@vm-corso-colonna:\~$```
 
 Type a command at the prompt (do not type the prompt) and send the command with Enter  
-   
-```$ echo focaccia al pomodoro  ```
 
-Press Enter 
+```user1@vm-corso-colonna:\~$ echo focaccia al pomodoro  ```
 
-Prompt might look different  than $ 
-
+```
 user1@vm-corso-colonna:\~$ ls  
 Shell-lesson-data
 
 user1@vm-corso-colonna:\~$ ks   
 ks: command not found
+```
 
-**2\. Navigating Files and Directories**
+**2. Navigating Files and Directories**
 
 The part of the operating system responsible for managing files and directories is called the file system. It organizes our data into files, which hold information, and directories (also called ‘folders’), which hold files or other directories.
 
