@@ -15,6 +15,14 @@ license (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/).
 
 The sections listed below incorporate or adapt Software Carpentry materials. 
 
+
+| Day and link to lesson | Date | Topics | Preparation Required |
+|:---:|:----:|--------|---------------------|
+| **[Day 1](../lessons/day1-shell.md)** | Dec 17, 2025 | Connection to remote machine<br>[The shell](https://swcarpentry.github.io/shell-novice/) | Download/install [the shell](https://carpentries.github.io/workshop-template/install_instructions/#shell)<br>Review Day 1 syllabus |
+| **2** | Dec 18, 2025 | [R for reproducible data analysis](https://swcarpentry.github.io/r-novice-gapminder/) | Install [R](https://www.r-project.org/) (latest version)<br>Install [RStudio Desktop](https://www.rstudio.com/products/rstudio/download/#download) |
+| **3** | Dec 19, 2025 | [Genomics workshop](https://datacarpentry.org/lessons/#genomics) | Review [workshop material](https://datacarpentry.github.io/genomics-workshop/)<br>Setup for local machine (Option B) |
+
+
 ### Day 1 - Dec 17 2025 - 
 
 a) Connection to remote machine 
@@ -34,12 +42,17 @@ Download and install the free Desktop version of [Rstudio](https://www.rstudio.c
 [Genomics](https://datacarpentry.org/lessons/#genomics)
 Required material [here](https://datacarpentry.github.io/genomics-workshop/) Option B: Using the lessons on your local machine
 
-<span style="color: red;">This text is red</span>
-<span style="color: #00ff88;">This text is green (hex)</span>
-<span style="color: rgb(0, 0, 255);">This text is blue (rgb)</span>
-<p style="color: purple;">This entire paragraph is purple</p>
 
-markdown
+
+
+
+
+
+
+
+
+
+
 
 ```diff
 + This line is green

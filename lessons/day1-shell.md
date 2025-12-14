@@ -12,7 +12,7 @@ This page contain a short and adapted version of the Software Carpentry lesson [
 
 ```diff
 + the prompt symbol $. Prompt might look different  than $. 
-user1@vm-corso-colonna:\~$
+user1@vm-corso-colonna:~$
 ```
 
 Type a command at the prompt (do not type the prompt) and send the command with `Enter`
