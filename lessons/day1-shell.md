@@ -11,7 +11,7 @@ This page contain a short and adapted version of the Software Carpentry lesson [
 - Raw sequence data can only be analyzed on super computers
 
 ```diff
-+ the prompt symbol $. Prompt might look different  than \$. 
++ the prompt symbol $. Prompt might look different  than $. 
 user1@vm-corso-colonna:\~$
 ```
 
@@ -21,10 +21,10 @@ Type a command at the prompt (do not type the prompt) and send the command with 
 user1@vm-corso-colonna:~$ echo focaccia al pomodoro 
 focaccia al pomodoro
 
-user1@vm-corso-colonna:\~$ ls  
+user1@vm-corso-colonna:~$ ls  
 Shell-lesson-data
 
-user1@vm-corso-colonna:\~$ ks   
+user1@vm-corso-colonna:~$ ks   
 ks: command not found
 ```
 
@@ -37,17 +37,17 @@ ks: command not found
 + COMMAND  pwd stands for print working directory
  ```
 
-user1@vm-corso-colonna:\~$ pwd   
+user1@vm-corso-colonna:~$ pwd   
 /home/user1
 
 **root (/)**
 
 ```diff
 + Root (/) is the top-level directory in a Unix/Linux filesystem hierarchy:
-+ \~ means home, your space in the filesystem 
-+ \~$ means you are at the prompt in your home directory 
++ ~ means home, your space in the filesystem 
++ ~$ means you are at the prompt in your home directory 
 
-user1@vm-corso-colonna:\~$ cd /  
+user1@vm-corso-colonna:~$ cd /  
 user1@vm-corso-colonna:/$ pwd  
 user1@vm-corso-colonna:/
 │
@@ -97,7 +97,7 @@ user1@vm-corso-colonna:~
 ``` diff 
 + COMMAND ls stands for list directory contents
 
-user1@vm-corso-colonna:\~$ ls  
+user1@vm-corso-colonna:~$ ls  
 Shell-lesson-data
 ```
 
@@ -105,39 +105,48 @@ Shell-lesson-data
 ``` diff 
 + COMMAND use --help and man  learning about command options 
 
-user1@vm-corso-colonna:\~$  ls \--help
+user1@vm-corso-colonna:~$  ls --help
 
-user1@vm-corso-colonna:\~$  man ls
+user1@vm-corso-colonna:~$  man ls
 ```
 
 Exploring Other Directories
+```
+user1@vm-corso-colonna:~$ ls  /home   
 
-user1@vm-corso-colonna:\~$ ls  /home   
-ubuntu  user10  user12  user14  user16  user18  user2   user21  user23  user25  user27  user29  user30  user32  user34  user4  user6  user8  
-user1   user11  user13  user15  user17  user19  user20  user22  user24  user26  user28  user3   user31  user33  user35  user5  user7  user9
-
+/home/
+├── ubuntu/        # System user
+└── user1-35/      # Course participants
+    ├── user1/     # ← You are here
+    ├── user2/
+    ├── user3/
+    ├── ...
+    └── user35/
+```
 
 
 ``` diff 
 + COMMAND  cd stands for change the shell working directory 
 
-user1@vm-corso-colonna:\~$ cd shell-lesson-data  
-user1@vm-corso-colonna:\~/shell-lesson-data$ cd ..   
-user1@vm-corso-colonna:\~$ pwd   
-/home/user1
+user1@vm-corso-colonna:~$ ls 
+shell-lesson-data
 
-user1@vm-corso-colonna:\~/shell-lesson-data/exercise-data$ cd \-   
-/home/user1/shell-lesson-data  
-user1@vm-corso-colonna:\~/shell-lesson-data$ cd \-   
-/home/user1/shell-lesson-data/exercise-data
+user1@vm-corso-colonna:~$ cd shell-lesson-data/
+
+user1@vm-corso-colonna:~/shell-lesson-data$ pwd 
+/home/user1/shell-lesson-data
+```
+
 
 **.hidden files** 
 
-CHALLENGES 
+>> Go to the [CHALLENGES](https://swcarpentry.github.io/shell-novice/02-filedir.html) of the SC lesson __ls Reading Comprehension__
+
+
 
 **2a. General Syntax of a Shell Command**
 
-![][image1]
+![../img/SC-syntax.png][image1]
 
 **Options (also referred as switches or flags)** change the behavior of a command  
 single dash (-) short options  
