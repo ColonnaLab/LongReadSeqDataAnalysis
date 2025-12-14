@@ -10,9 +10,11 @@ This page contain a short and adapted version of the Software Carpentry lesson [
 - The command line is necessary to interact with remote machines and supercomputers.
 - Raw sequence data can only be analyzed on super computers
 
-Familiarize with the command line interface and with the prompt symbol (\$). Prompt might look different  than \$. 
+```diff
++ the prompt symbol $. Prompt might look different  than \$. 
 
-```user1@vm-corso-colonna:\~$```
+user1@vm-corso-colonna:\~$
+```
 
 Type a command at the prompt (do not type the prompt) and send the command with Enter  
 
@@ -31,7 +33,7 @@ ks: command not found
 - File system: the part of the operating system responsible for managing files and directories. It organizes our data into files, which hold information, and directories (also called ‘folders’), which hold files or other directories.
 
 ``` diff 
-+ COMMAND: **pwd** which stands for print working directory
++ COMMAND - pwd -  print working directory
  ```
 
 user1@vm-corso-colonna:\~$ pwd   
