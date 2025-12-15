@@ -397,7 +397,24 @@ user1@vm-corso-colonna:~/shell-lesson-data/exercise-data/alkanes$ sort  lengths.
   12 ethane.pdb
   15 propane.pdb
 ```
+<img src="../img/piperedirect.png" alt="pipe" style="width:80%; height:auto;">
 
-![pipe](../img/piperedirect.png)
+>> Go to the [CHALLENGES](https://swcarpentry.github.io/shell-novice/04-pipefilter.html) of the SC lesson __Pipe Reading Comprehension__
 
->> Go to the [CHALLENGES](https://swcarpentry.github.io/shell-novice/04-pipefilter.html) of the SC lesson __Pipe Reading Comprehension
+
+##### **Shell Scripts** 
+
+```diff
+! EXERCISE write previus command in a text file using nano and save it with the name myfirstscript.sh
+
+```
+
+```diff 
+user1@vm-corso-colonna:~/shell-lesson-data/exercise-data/alkanes$ nano myfirstscript.sh 
++ save the file using Ctrl-O 
++ exit the text editor using Ctrl-X  
+
++ run the script: 
+user1@vm-corso-colonna:~/shell-lesson-data/exercise-data/alkanes$ bash myfirstscript.sh 
+
+```
