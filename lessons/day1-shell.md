@@ -8,7 +8,14 @@ This page contain a short and adapted version of the Software Carpentry lesson [
 - The most popular Unix shell is Bash (the Bourne Again SHell — so-called because it’s derived from a shell written by [Stephen Bourne](https://en.wikipedia.org/wiki/Stephen_R._Bourne))
 - Instructions to computer through shell are given as text in commands (followed by `Enter`) or sequences of commands (scripts) 
 - The command line is necessary to interact with remote machines and supercomputers
-- Raw sequence data can only be analyzed on super computers
+
+
+##### Why genomics uses command-line tools? 
+
+- **Automation** - Handle large numbers of files and repetitive tasks efficiently
+- **Computing power** - Access remote servers and high-performance computing clusters
+- **Flexibility** - Customize analyses beyond what GUI tools allow (if they even exist)
+
 
 ```diff
 + the prompt symbol $. Prompt might look different  than $. 
