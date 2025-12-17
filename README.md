@@ -15,21 +15,16 @@ license (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/).
 
 **The sections listed below incorporate or adapt Software Carpentry materials.**
 
-
 | Day and link to lesson | Date | Topics | Preparation Required |
 |:---:|:----:|--------|---------------------|
 | **[Day 1](lessons/day1-shell.md)** | 2025/12/17 | Connection to remote machine<br>[The shell](https://swcarpentry.github.io/shell-novice/) | Download/install [the shell](https://carpentries.github.io/workshop-template/install_instructions/#shell)<br>|
 | **2** | 2025/12/18 | [R for reproducible data analysis](https://swcarpentry.github.io/r-novice-gapminder/) | Install [R](https://www.r-project.org/) (latest version)<br>Install [RStudio Desktop](https://www.rstudio.com/products/rstudio/download/#download) |
-| **3** | 2025/12/19 | [Genomics workshop](https://datacarpentry.org/lessons/#genomics) | Review [workshop material](https://datacarpentry.github.io/genomics-workshop/)<br>Setup for local machine (Option B) |
+| **3** | 2025/12/19 | [Genomics workshop - Data wrangling ](https://datacarpentry.github.io/wrangling-genomics/) | Review [workshop material](https://datacarpentry.github.io/genomics-workshop/)<br>Setup for local machine (Option B) |
 
 
 
+#### Why genomics uses command-line tools? 
 
-
-
-```diff
-+ This line is green
-- This line is red
-! This line is orange (GitLab only)
-# This line is gray
-```
+- Automation - Handle large numbers of files and repetitive tasks efficiently
+- Computing power - Access remote servers and high-performance computing clusters
+- Flexibility - Customize analyses beyond what GUI tools allow (if they even exist)
