@@ -24,17 +24,23 @@ graph LR
 
 [FASTQ](https://en.wikipedia.org/wiki/FASTQ_format) files contain raw sequencing reads with four lines per sequence:
 
-```diff
+```
 @SRR2584863.1 HWI-ST957:244:H73TDADXX:1:1101:4712:2181/1
 TTCACATCCTGACCATTCAGTTGAGCAAAATAGTTCTTCAGTGCCTGTTTAACCGAGTCACGCAGGGGTTTTTGGGTTACCTGATCCTGAGAGTTAACGGTAGAAACGGTCAGTACGTCAGAATTTACGCGTTGTTCGAACATAGTTCTG
-\+
++
 CCCFFFFFGHHHHJIJJJJIJJJIIJJJJIIIJJGFIIIJEDDFEGGJIFHHJIJJDECCGGEGIIJFHFFFACD:BBBDDACCCCAA@@CA@C>C3>@5(8&>C:9?8+89<4(:83825C(:A#########################
-
+```
+```diff
 + Line 1: Header with @ followed by sequence ID
 + Line 2: Raw sequence (DNA bases)
 + Line 3: Separator (+)
 + Line 4: Quality scores (ASCII encoded)
+
++ Quality encoding: !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJ
++                   |         |         |         |         |
++ Quality score:    01........11........21........31........41
 ```
+
 
 ```diff
 ! EXERCISE: See where we are with $pwd  and move to  /home/user1/genomic-lesson-data/untrimmed_fastq  #pay attention to user number!! 
@@ -42,13 +48,17 @@ CCCFFFFFGHHHHJIJJJJIJJJIIJJJJIIIJJGFIIIJEDDFEGGJIFHHJIJJDECCGGEGIIJFHFFFACD:BBBD
 
 + COMMAND: gzip, gunzip, zcat - compress or expand files
 + COMMAND: head - output the first part of files
+```
 
+Use `zcat` combined with `head` to inspect the content of the `SRR2584863_1.fastq.gz`  file: 
+``
 user1@vm-corso-colonna:~/genomic-lesson-data/untrimmed_fastq$ zcat SRR2584863_1.fastq.gz  | head -n 4
 @SRR2584863.1 HWI-ST957:244:H73TDADXX:1:1101:4712:2181/1
 TTCACATCCTGACCATTCAGTTGAGCAAAATAGTTCTTCAGTGCCTGTTTAACCGAGTCACGCAGGGGTTTTTGGGTTACCTGATCCTGAGAGTTAACGGTAGAAACGGTCAGTACGTCAGAATTTACGCGTTGTTCGAACATAGTTCTG
-\+
++
 CCCFFFFFGHHHHJIJJJJIJJJIIJJJJIIIJJGFIIIJEDDFEGGJIFHHJIJJDECCGGEGIIJFHFFFACD:BBBDDACCCCAA@@CA@C>C3>@5(8&>C:9?8+89<4(:83825C(:A#########################
 
+! How is the quality at the end of the read? 
 ```
 
 user1@vm-corso-colonna:~$ mkdir resres 
@@ -56,43 +66,21 @@ user1@vm-corso-colonna:~$ cd resres
 user1@vm-corso-colonna:~/resres$ fastqc -h | less 
 user1@vm-corso-colonna:~/resres$ fastqc ../datadata/SRR258* -o . 
 
-
+```
  scp  user1@212.189.205.193:/home/user1/resres/*.html  . 
-
-
+```
 
 ### **Quality Control of Genomics Data**
-This page contains a short and adapted version of the Data Carpentry lesson [Assessing Read Quality](https://datacarpentry.github.io/wrangling-genomics/02-quality-control.html). We will use it as notes to key concepts we will discuss during our lesson.
+The following contains a short and adapted version of the Data Carpentry lesson [Assessing Read Quality](https://datacarpentry.github.io/wrangling-genomics/02-quality-control.html). We will use it as notes to key concepts we will discuss during our lesson.
 
 ##### **Why Quality Control in Genomics?**
+Quality control helps us identify and remove problematic data before analysis. Poor quality data can lead to incorrect biological conclusions
 
 - **Sequencing errors** - Base calling mistakes increase towards the end of reads
 - **Adapter contamination** - Sequencing adapters can appear in your reads
 - **Low quality bases** - Can lead to false variant calls and misassemblies
 - **Contamination** - From other organisms or samples
 
-```diff
-+ Quality control helps us identify and remove problematic data before analysis
-+ Poor quality data can lead to incorrect biological conclusions
-```
-
-### **1. Understanding FASTQ Format**
-
-FASTQ files contain raw sequencing reads with four lines per sequence:
-
-```
-@SRR2584863.1 HWI-ST957:244:H73TDADXX:1:1101:4712:2181/1
-TTCACATCCTGACCATTCAGTTGAGCAAAATAGTTCTTCAGTGCCTGTTTAACCGAGTCACGCAGGGGTTTTTGGGTTACCTGATCCTGAGAGTTAACGGTAGAAACGGTCAGTACGTCAGAATTTACGCGTTGTTCGAACATAGTTCTG
-+
-CCCFFFFFGHHHHJIJJJJIJJJIIJJJJIIIJJGFIIIJEDDFEGGJIFHHJIJJDECCGGEGIIJFHFFFACD:BBBDDACCCCAA@@CA@C>C3>@5(8&>C:9?8+89<4(:83825C(:A#########################
-```
-
-```diff
-+ Line 1: Header with @ followed by sequence ID
-+ Line 2: Raw sequence (DNA bases)
-+ Line 3: Separator (+)
-+ Line 4: Quality scores (ASCII encoded)
-```
 
 ##### **Quality Score Encoding**
 
@@ -100,11 +88,21 @@ CCCFFFFFGHHHHJIJJJJIJJJIIJJJJIIIJJGFIIIJEDDFEGGJIFHHJIJJDECCGGEGIIJFHFFFACD:BBBD
 - Q30 = 99.9% accuracy (1 error in 1000 bases)
 - Q20 = 99% accuracy (1 error in 100 bases)
 
-### **2. Running FastQC**
+### **Running FastQC**
+
+`fastqc` is a software that performs quality control checks on raw sequence data
+
 
 ```diff
-+ COMMAND fastqc performs quality control checks on raw sequence data
+!EXERCISE try to learn about fastqc using man 
+
+enza@iusato:~/iusatoProtocol/LongReadSeqDataAnalysis$ man fastcq 
+No manual entry for fastcq
+
+! why it does not work? 
 ```
+
+
 
 ```bash
 user1@vm-corso-colonna:~/dc_workshop/data/untrimmed_fastq$ fastqc SRR2584863_1.fastq.gz
