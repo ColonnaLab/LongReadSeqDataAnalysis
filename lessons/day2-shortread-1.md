@@ -125,98 +125,16 @@ Analysis complete for SRR2584863_1.fastq.g
 ### **Interpreting FastQC Results**
 FastQC generates two output files: an HTML report and a ZIP archive. HTML files are web-based documents that require a browser to view properly - they can not be opened directly on command-line servers. To view the HTML report, we need to **transfer it from the remote server to our local computer** where we can open it in a web browser. This file transfer process is an essential skill for working with bioinformatics pipelines on computing clusters.
 
-
+![scp](../img/SCP.png)
 
 ```diff 
 + COMMAND scp copies files between hosts on a network
 
  scp  user1@212.189.205.193:/home/user1/seq-analysis/SRR2584863_1_fastqc.html . 
 ```
-```mermaid
-graph TD
-    subgraph "SCP Command Structure"
-        A[scp] 
-        B[user1]
-        C[@]
-        D[212.189.205.193]
-        E[:]
-        F[/home/user1/seq-analysis/SRR2584863_1_fastqc.html]
-        G[.]
-    end
-    
-    A --> A1[COMMAND]
-    B --> B1[USER]
-    C --> C1[at]
-    D --> D1[SERVER IP]
-    E --> E1[separator]
-    F --> F1[SOURCE<br/>remote file path]
-    G --> G1[DESTINATION<br/>current directory]
-    
-    style A fill:#5A9CB5,stroke:#333,stroke-width:2px
-    style B fill:#FACE68,stroke:#333,stroke-width:2px
-    style C fill:#FA6868,stroke:#333,stroke-width:2px
-    style D fill:#FACE68,stroke:#333,stroke-width:2px
-    style E fill:#FA6868,stroke:#333,stroke-width:2px
-    style F fill:#FAAC68,stroke:#333,stroke-width:2px
-    style G fill:#5A9CB5,stroke:#333,stroke-width:2px
 
-graph LR
-    A[scp] --> B[user1]
-    B --> C[@]
-    C --> D[212.189.205.193]
-    D --> E[:]
-    E --> F[/home/user1/seq-analysis/SRR2584863_1_fastqc.html]
-    F --> G[.]
-    
-    A -.-> A1[COMMAND]
-    B -.-> B1[USER]
-    D -.-> D1[SERVER]
-    F -.-> F1[SOURCE]
-    G -.-> G1[DESTINATION]
-    
-    style A fill:#5A9CB5,stroke:#333,stroke-width:2px
-    style B fill:#FACE68,stroke:#333,stroke-width:2px
-    style D fill:#FACE68,stroke:#333,stroke-width:2px
-    style F fill:#FAAC68,stroke:#333,stroke-width:2px
-    style G fill:#5A9CB5,stroke:#333,stroke-width:2px
 
-```
-````mermaid
-flowchart LR
-    A["scp"] --- B["user1"]
-    B --- C["@"]
-    C --- D["212.189.205.193"]
-    D --- E[":"]
-    E --- F["/home/user1/seq-analysis/SRR2584863_1_fastqc.html"]
-    F --- G["."]
-    A -.-> A1["COMMAND"]
-    B -.-> B1["USER"]
-    D -.-> D1["SERVER"]
-    F -.-> F1["LOCATION ON SERVER"]
-    G --> n1["LOCATION ON MY COMPUTER"]
-    n3["<br>"] -.-> n2["ORIGIN"]
-    n4["<br>"] -.-> G1["DESTINATION"]
 
-    n1@{ shape: rect}
-    n3@{ shape: rect}
-    n2@{ shape: rect}
-    n4@{ shape: rect}
-     n3:::Class_01
-     n4:::Class_01
-    classDef Class_01 fill:transparent
-    style A fill:#5A9CB5,stroke:#333,stroke-width:2px
-    style B fill:#FACE68,stroke:#333,stroke-width:2px
-    style D fill:#FACE68,stroke:#333,stroke-width:2px
-    style F fill:#FAAC68,stroke:#333,stroke-width:2px
-    style G fill:#5A9CB5,stroke:#333,stroke-width:2px
-    style n3 stroke:#FF6D00
-    style n2 stroke:#FF6D00,color:#FF6D00
-    style n4 stroke:#FF6D00
-    style G1 stroke:#FF6D00,color:#FF6D00
-    linkStyle 11 stroke:#FF6D00,fill:none
-    linkStyle 12 stroke:#FF6D00,fill:none
-
-````
 ##### **Key Quality Metrics**
 
 ```diff
