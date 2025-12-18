@@ -3,20 +3,7 @@
 ## Short read data analysis workflow
 This workflow shows how raw DNA sequencing data is processed from initial reads to final variant calls. Each colored box represents a file format, while arrows indicate the bioinformatics tools used for transformation. The pipeline begins with FASTQ files containing raw sequencing reads and ends with VCF files containing identified genetic variants.
 
-````mermaid
-graph LR
-    A[FASTQ] -->|FastQC/Trimmomatic| B[FASTQ]
-    B -->|BWA/Bowtie2| C[SAM/BAM]
-    C -->|Clean/Sort| D[BAM]
-    D -->|GATK/bcftools| E[VCF]
-    
-    style A fill:#FA6868,stroke:#1B3C53,stroke-width:2px,color:#1B3C53
-    style B fill:#5A9CB5,stroke:#333,stroke-width:2px,color:#1B3C53
-    style C fill:#FACE68,stroke:#333,stroke-width:2px,color:#1B3C53
-    style D fill:#FAAC68,stroke:#333,stroke-width:2px,color:#1B3C53
-    style E fill:#FA6868,stroke:#333,stroke-width:2px,color:#1B3C53
-
-````
+![scp](../img/shortreadWF.png)
 
 ```diff
 + We will go to the wrokflow while learning more bash commands: zcat,  
