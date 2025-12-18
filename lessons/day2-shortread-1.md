@@ -43,15 +43,15 @@ CCCFFFFFGHHHHJIJJJJIJJJIIJJJJIIIJJGFIIIJEDDFEGGJIFHHJIJJDECCGGEGIIJFHFFFACD:BBBD
 
 
 ```diff
-! EXERCISE: See where we are with $pwd  and move to  /home/user1/genomic-lesson-data/untrimmed_fastq  #pay attention to user number!! 
-! see what it contains, note the gz extension of the files  
+! EXERCISE: See where we are with $pwd  and move to  /home/user1/genomic-lesson-data/ #pay attention to user number!! 
+! Check the content of untrimmed_fastq/ see what it contains, note the gz extension of the files  
 
 + COMMAND: gzip, gunzip, zcat - compress or expand files
 + COMMAND: head - output the first part of files
 ```
 
 Use `zcat` combined with `head` to inspect the content of the `SRR2584863_1.fastq.gz`  file: 
-``
+```
 user1@vm-corso-colonna:~/genomic-lesson-data/untrimmed_fastq$ zcat SRR2584863_1.fastq.gz  | head -n 4
 @SRR2584863.1 HWI-ST957:244:H73TDADXX:1:1101:4712:2181/1
 TTCACATCCTGACCATTCAGTTGAGCAAAATAGTTCTTCAGTGCCTGTTTAACCGAGTCACGCAGGGGTTTTTGGGTTACCTGATCCTGAGAGTTAACGGTAGAAACGGTCAGTACGTCAGAATTTACGCGTTGTTCGAACATAGTTCTG
@@ -59,15 +59,6 @@ TTCACATCCTGACCATTCAGTTGAGCAAAATAGTTCTTCAGTGCCTGTTTAACCGAGTCACGCAGGGGTTTTTGGGTTAC
 CCCFFFFFGHHHHJIJJJJIJJJIIJJJJIIIJJGFIIIJEDDFEGGJIFHHJIJJDECCGGEGIIJFHFFFACD:BBBDDACCCCAA@@CA@C>C3>@5(8&>C:9?8+89<4(:83825C(:A#########################
 
 ! How is the quality at the end of the read? 
-```
-
-user1@vm-corso-colonna:~$ mkdir resres 
-user1@vm-corso-colonna:~$ cd resres 
-user1@vm-corso-colonna:~/resres$ fastqc -h | less 
-user1@vm-corso-colonna:~/resres$ fastqc ../datadata/SRR258* -o . 
-
-```
- scp  user1@212.189.205.193:/home/user1/resres/*.html  . 
 ```
 
 ### **Quality Control of Genomics Data**
@@ -90,8 +81,7 @@ Quality control helps us identify and remove problematic data before analysis. P
 
 ### **Running FastQC**
 
-`fastqc` is a software that performs quality control checks on raw sequence data
-
+[`fastqc`](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) is a software that performs quality control checks on raw sequence data
 
 ```diff
 !EXERCISE try to learn about fastqc using man 
@@ -100,40 +90,98 @@ enza@iusato:~/iusatoProtocol/LongReadSeqDataAnalysis$ man fastcq
 No manual entry for fastcq
 
 ! why it does not work? 
+! try instead user1@vm-corso-colonna:~/genomic-lesson-data$ fastqc -h | less 
+
 ```
 
+Before starting it is good practice to create a dedicated folder where all the ananlyses will be performed and never work in the folder where the data is. We will make a folder named seq-analysis  in our home and work from there 
 
+```
+user1@vm-corso-colonna:~$ cd  # make sure to eb in your home dir 
+user1@vm-corso-colonna:~$ mkdir seq-analysis
+user1@vm-corso-colonna:~$ ls 
+genomic-lesson-data  seq-analysis  shell-lesson-data
+user1@vm-corso-colonna:~$ cd seq-analysis/
+user1@vm-corso-colonna:~/seq-analysis$ 
 
-```bash
-user1@vm-corso-colonna:~/dc_workshop/data/untrimmed_fastq$ fastqc SRR2584863_1.fastq.gz
+```
 
+We will check the quality of our sequence reads using `fastqc` 
+
+```diff
+user1@vm-corso-colonna:~$ ls 
+datadata  genomic-lesson-data  resres  seq-analysis  shell-lesson-data
+user1@vm-corso-colonna:~$ cd seq-analysis/
++ user1@vm-corso-colonna:~/seq-analysis$ fastqc ../genomic-lesson-data/untrimmed_fastq/SRR2584863_1.fastq.gz -o . 
+application/gzip
 Started analysis of SRR2584863_1.fastq.gz
 Approx 5% complete for SRR2584863_1.fastq.gz
 Approx 10% complete for SRR2584863_1.fastq.gz
 ...
-Analysis complete for SRR2584863_1.fastq.gz
+Approx 95% complete for SRR2584863_1.fastq.gz
+Analysis complete for SRR2584863_1.fastq.g
 ```
 
-##### **Running FastQC on Multiple Files**
+### **Interpreting FastQC Results**
+FastQC generates two output files: an HTML report and a ZIP archive. HTML files are web-based documents that require a browser to view properly - they can not be opened directly on command-line servers. To view the HTML report, we need to **transfer it from the remote server to our local computer** where we can open it in a web browser. This file transfer process is an essential skill for working with bioinformatics pipelines on computing clusters.
 
-```diff
-+ Use wildcards to process multiple files at once
+
+
+```diff 
++ COMMAND scp copies files between hosts on a network
+
+ scp  user1@212.189.205.193:/home/user1/seq-analysis/SRR2584863_1_fastqc.html . 
 ```
+```mermaid
+graph TD
+    subgraph "SCP Command Structure"
+        A[scp] 
+        B[user1]
+        C[@]
+        D[212.189.205.193]
+        E[:]
+        F[/home/user1/seq-analysis/SRR2584863_1_fastqc.html]
+        G[.]
+    end
+    
+    A --> A1[COMMAND]
+    B --> B1[USER]
+    C --> C1[at]
+    D --> D1[SERVER IP]
+    E --> E1[separator]
+    F --> F1[SOURCE<br/>remote file path]
+    G --> G1[DESTINATION<br/>current directory]
+    
+    style A fill:#5A9CB5,stroke:#333,stroke-width:2px
+    style B fill:#FACE68,stroke:#333,stroke-width:2px
+    style C fill:#FA6868,stroke:#333,stroke-width:2px
+    style D fill:#FACE68,stroke:#333,stroke-width:2px
+    style E fill:#FA6868,stroke:#333,stroke-width:2px
+    style F fill:#FAAC68,stroke:#333,stroke-width:2px
+    style G fill:#5A9CB5,stroke:#333,stroke-width:2px
 
-```bash
-user1@vm-corso-colonna:~/dc_workshop/data/untrimmed_fastq$ fastqc *.fastq*
+graph LR
+    A[scp] --> B[user1]
+    B --> C[@]
+    C --> D[212.189.205.193]
+    D --> E[:]
+    E --> F[/home/user1/seq-analysis/SRR2584863_1_fastqc.html]
+    F --> G[.]
+    
+    A -.-> A1[COMMAND]
+    B -.-> B1[USER]
+    D -.-> D1[SERVER]
+    F -.-> F1[SOURCE]
+    G -.-> G1[DESTINATION]
+    
+    style A fill:#5A9CB5,stroke:#333,stroke-width:2px
+    style B fill:#FACE68,stroke:#333,stroke-width:2px
+    style D fill:#FACE68,stroke:#333,stroke-width:2px
+    style F fill:#FAAC68,stroke:#333,stroke-width:2px
+    style G fill:#5A9CB5,stroke:#333,stroke-width:2px
+
+
 ```
-
-##### **FastQC Output Files**
-
-```bash
-user1@vm-corso-colonna:~/dc_workshop/data/untrimmed_fastq$ ls
-SRR2584863_1_fastqc.html  SRR2584863_1_fastqc.zip  SRR2584863_1.fastq.gz
-SRR2584863_2_fastqc.html  SRR2584863_2_fastqc.zip  SRR2584863_2.fastq.gz
-```
-
-### **3. Interpreting FastQC Results**
-
 ##### **Key Quality Metrics**
 
 ```diff
@@ -153,6 +201,30 @@ SRR2584863_2_fastqc.html  SRR2584863_2_fastqc.zip  SRR2584863_2.fastq.gz
 ```diff
 ! EXERCISE: Open the FastQC HTML report and identify which metrics pass/warn/fail
 ```
+
+
+
+
+
+
+##### **Running FastQC on Multiple Files**
+
+```diff
++ Use wildcards to process multiple files at once
+```
+
+```bash
+user1@vm-corso-colonna:~/dc_workshop/data/untrimmed_fastq$ fastqc *.fastq*
+```
+
+##### **FastQC Output Files**
+
+```bash
+user1@vm-corso-colonna:~/dc_workshop/data/untrimmed_fastq$ ls
+SRR2584863_1_fastqc.html  SRR2584863_1_fastqc.zip  SRR2584863_1.fastq.gz
+SRR2584863_2_fastqc.html  SRR2584863_2_fastqc.zip  SRR2584863_2.fastq.gz
+```
+
 
 ### **4. Quality Trimming with Trimmomatic**
 
