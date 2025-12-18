@@ -1,3 +1,5 @@
+[back to course home page ](../README.md)
+
 ### **1. Introducing the Shell**
 This page contain a short and adapted version of the Software Carpentry lesson [The shell](https://swcarpentry.github.io/shell-novice/). We will use it as notes to key concepts we will discuss during our lesson. 
 

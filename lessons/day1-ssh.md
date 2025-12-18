@@ -1,3 +1,5 @@
+[back to course home page ](../README.md)
+
 # Connecting to a Remote Server: Quick Start
 
 ## What is a Remote Server?

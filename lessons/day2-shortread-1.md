@@ -1,3 +1,5 @@
+[back to course home page ](../README.md)
+
 ## Short read data analysis workflow
 This workflow shows how raw DNA sequencing data is processed from initial reads to final variant calls. Each colored box represents a file format, while arrows indicate the bioinformatics tools used for transformation. The pipeline begins with FASTQ files containing raw sequencing reads and ends with VCF files containing identified genetic variants.
 
