@@ -181,6 +181,40 @@ graph LR
     style G fill:#5A9CB5,stroke:#333,stroke-width:2px
 
 
+flowchart LR
+    A["scp"] --- B["user1"]
+    B --- C["@"]
+    C --- D["212.189.205.193"]
+    D --- E[":"]
+    E --- F["/home/user1/seq-analysis/SRR2584863_1_fastqc.html"]
+    F --- G["."]
+    A -.-> A1["COMMAND"]
+    B -.-> B1["USER"]
+    D -.-> D1["SERVER"]
+    F -.-> F1["LOCATION ON SERVER"]
+    G --> n1["LOCATION ON MY COMPUTER"]
+    n3["<br>"] -.-> n2["ORIGIN"]
+    n4["<br>"] -.-> G1["DESTINATION"]
+
+    n1@{ shape: rect}
+    n3@{ shape: rect}
+    n2@{ shape: rect}
+    n4@{ shape: rect}
+     n3:::Class_01
+     n4:::Class_01
+    classDef Class_01 fill:transparent
+    style A fill:#5A9CB5,stroke:#333,stroke-width:2px
+    style B fill:#FACE68,stroke:#333,stroke-width:2px
+    style D fill:#FACE68,stroke:#333,stroke-width:2px
+    style F fill:#FAAC68,stroke:#333,stroke-width:2px
+    style G fill:#5A9CB5,stroke:#333,stroke-width:2px
+    style n3 stroke:#FF6D00
+    style n2 stroke:#FF6D00,color:#FF6D00
+    style n4 stroke:#FF6D00
+    style G1 stroke:#FF6D00,color:#FF6D00
+    linkStyle 11 stroke:#FF6D00,fill:none
+    linkStyle 12 stroke:#FF6D00,fill:none
+    
 ```
 ##### **Key Quality Metrics**
 
