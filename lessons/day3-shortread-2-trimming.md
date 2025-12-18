@@ -1,6 +1,10 @@
+[back to course home page ](../README.md)
+
+## Quality Trimming with Trimmomatic
+This page contain a short and adapted version of the Software Carpentry lesson [Assessing Read Quality](https://datacarpentry.github.io/wrangling-genomics/02-quality-control.html). We will use it as notes to key concepts we will discuss during our lesson
 
 
-### **4. Quality Trimming with Trimmomatic**
+
 
 **[`Trimmomatic`](http://www.usadellab.org/cms/?page=trimmomatic)** is a flexible read trimming tool for Illumina NGS data that performs quality filtering and adapter removal to clean raw sequencing reads before downstream analysis.
 

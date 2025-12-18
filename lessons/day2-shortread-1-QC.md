@@ -1,6 +1,9 @@
 [back to course home page ](../README.md)
 
 ## Short read data analysis workflow
+This page contain a short and adapted version of the Software Carpentry lesson [Assessing Read Quality](https://datacarpentry.github.io/wrangling-genomics/02-quality-control.html). We will use it as notes to key concepts we will discuss during our lesson
+
+
 This workflow shows how raw DNA sequencing data is processed from initial reads to final variant calls. Each colored box represents a file format, while arrows indicate the bioinformatics tools used for transformation. The pipeline begins with FASTQ files containing raw sequencing reads and ends with VCF files containing identified genetic variants.
 
 ![scp](../img/shortreadWF.png)
