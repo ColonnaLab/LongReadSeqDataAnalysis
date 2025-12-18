@@ -33,14 +33,17 @@ graph LR
 ## Example for Your Genomics Workflow
 ````mermaid
 graph LR
-    A[Sequence reads Raw Data] -->|FastQC/Trimmomatic| B[FASTQ]
+    A[Sequence reads] -->|FastQC/Trimmomatic| B[FASTQ]
     B -->|BWA/Bowtie2| C[SAM/BAM]
     C -->|Clean/Sort| D[BAM]
     D -->|GATK/bcftools| E[VCF]
     
-    style B fill:#5A9CB5,stroke:#333,stroke-width:2px,color:#001F3D
-    style C fill:#FACE68,stroke:#333,stroke-width:2px,color:#001F3D
-    style D fill:#FAAC68,stroke:#333,stroke-width:2px,color:#fff
+    style A fill:#FA6868,stroke:#333,stroke-width:2px,color:#1B3C53
+    style B fill:#5A9CB5,stroke:#333,stroke-width:2px,color:#1B3C53
+    style C fill:#FACE68,stroke:#333,stroke-width:2px,color:#1B3C53
+    style D fill:#FAAC68,stroke:#333,stroke-width:2px,color:#1B3C53
+    style E fill:#FA6868,stroke:#333,stroke-width:2px,color:#1B3C53
+
 ````
 
 
