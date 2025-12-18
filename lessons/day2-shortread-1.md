@@ -18,7 +18,7 @@ graph LR
 
 ## Example for Your Genomics Workflow
 ````mermaid
-graph TD
+graph LR
     A[Sequence readsRaw Data] -->|FASTQ| B[Quality ControlFastQC/Trimmomatic]
     B -->|FASTQ| C[Alignment to GenomeBWA/Bowtie2]
     C -->|SAM/BAM| D[Alignment CleanupSort/Mark Duplicates]
