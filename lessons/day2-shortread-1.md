@@ -180,7 +180,8 @@ graph LR
     style F fill:#FAAC68,stroke:#333,stroke-width:2px
     style G fill:#5A9CB5,stroke:#333,stroke-width:2px
 
-
+```
+````mermaid
 flowchart LR
     A["scp"] --- B["user1"]
     B --- C["@"]
@@ -214,8 +215,8 @@ flowchart LR
     style G1 stroke:#FF6D00,color:#FF6D00
     linkStyle 11 stroke:#FF6D00,fill:none
     linkStyle 12 stroke:#FF6D00,fill:none
-    
-```
+
+````
 ##### **Key Quality Metrics**
 
 ```diff
