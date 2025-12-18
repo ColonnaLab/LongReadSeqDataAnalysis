@@ -9,7 +9,7 @@ Course material for a Practical Course at the [University of Bari](https://www.u
 |:---:|:----:|--------|---------------------|
 |**[Day 1 - shh](lessons/day1-ssh.md)**| 2025/12/16 |Connection to remote machine |none |
 | **[Day 1 - bash](lessons/day1-shell.md)** | 2025/12/17 | [The shell](https://swcarpentry.github.io/shell-novice/) | Download/install [the shell](https://carpentries.github.io/workshop-template/install_instructions/#shell)<br>|
-| **2** | 2025/12/18 | [R for reproducible data analysis](https://swcarpentry.github.io/r-novice-gapminder/) | Install [R](https://www.r-project.org/) (latest version)<br>Install [RStudio Desktop](https://www.rstudio.com/products/rstudio/download/#download) |
+| **[Day 2 - FastQC](lessons/day2-shortread-1.md)** | 2025/12/18 | [Assessing Read Quality](https://datacarpentry.github.io/wrangling-genomics/02-quality-control.html) | Review [workshop material](https://datacarpentry.github.io/genomics-workshop/)<br>Setup for local machine (Option B)  |
 | **3** | 2025/12/19 | [Genomics workshop - Data wrangling ](https://datacarpentry.github.io/wrangling-genomics/) | Review [workshop material](https://datacarpentry.github.io/genomics-workshop/)<br>Setup for local machine (Option B) |
 | **Extra** | - | [R for reproducible data analysis](https://swcarpentry.github.io/r-novice-gapminder/) | Install [R](https://www.r-project.org/) (latest version)<br>Install [RStudio Desktop](https://www.rstudio.com/products/rstudio/download/#download) |
 
