@@ -6,7 +6,7 @@ This workflow shows how raw DNA sequencing data is processed from initial reads 
 ![scp](../img/shortreadWF.png)
 
 ```diff
-+ We will go to the wrokflow while learning more bash commands: zcat,  
++ We will go to the wrokflow while learning more bash commands: zcat, head, scp, .. 
 
 ```
 ### **1. Understanding FASTQ Format**
@@ -34,7 +34,8 @@ CCCFFFFFGHHHHJIJJJJIJJJIIJJJJIIIJJGFIIIJEDDFEGGJIFHHJIJJDECCGGEGIIJFHFFFACD:BBBD
 ```diff
 ! EXERCISE: See where we are with $pwd  and move to  /home/user1/genomic-lesson-data/ #pay attention to user number!! 
 ! Check the content of untrimmed_fastq/ see what it contains, note the gz extension of the files  
-
+```
+```diff
 + COMMAND: gzip, gunzip, zcat - compress or expand files
 + COMMAND: head - output the first part of files
 ```

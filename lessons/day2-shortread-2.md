@@ -2,9 +2,10 @@
 
 ### **4. Quality Trimming with Trimmomatic**
 
+**[`Trimmomatic`](http://www.usadellab.org/cms/?page=trimmomatic)** is a flexible read trimming tool for Illumina NGS data that performs quality filtering and adapter removal to clean raw sequencing reads before downstream analysis.
+
+
 ```diff
-+ COMMAND trimmomatic removes adapters and trims low quality bases
-```
 
 ##### **Basic Trimmomatic Command Structure**
 
@@ -19,6 +20,7 @@ trimmomatic PE \
   output_reverse_paired.fq.gz \
   output_reverse_unpaired.fq.gz \
   OPTION:VALUE...
+
 ```
 
 ##### **Common Trimming Options**
@@ -32,6 +34,21 @@ trimmomatic PE \
 ```
 
 ##### **Example Trimming Command**
+
+
+```bash
+java -jar /data/Trimmomatic-0.39/trimmomatic-0.39.jar \
+  PE -threads 4 \
+  ../../genomic-lesson-data/untrimmed_fastq/SRR2584863_1.fastq.gz \
+  ../../genomic-lesson-data/untrimmed_fastq/SRR2584863_2.fastq.gz \
+  SRR2584863_1.trimmed.fastq SRR2584863_1.un.trimmed.fastq \
+  SRR2584863_2.trimmed.fastq SRR2584863_2.un.trimmed.fastq \
+  ILLUMINACLIP:/data/Trimmomatic-0.39/adapters/TruSeq3-PE.fa:2:30:10 \
+  SLIDINGWINDOW:4:20
+```
+
+
+
 
 ```bash
 user1@vm-corso-colonna:~/dc_workshop/data/untrimmed_fastq$ trimmomatic PE \
