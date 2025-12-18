@@ -19,7 +19,7 @@ graph LR
 ## Example for Your Genomics Workflow
 ````mermaid
 graph LR
-    A[Sequence readsRaw Data] -->|FASTQ| B[Quality ControlFastQC/Trimmomatic]
+    A[Sequence reads Raw Data] -->|FASTQ| B[Quality ControlFastQC/Trimmomatic]
     B -->|FASTQ| C[Alignment to GenomeBWA/Bowtie2]
     C -->|SAM/BAM| D[Alignment CleanupSort/Mark Duplicates]
     D -->|BAM| E[Variant CallingGATK/bcftools]
@@ -29,6 +29,20 @@ graph LR
     style D fill:#4169e1,stroke:#333,stroke-width:2px,color:#fff
     style E fill:#ff9500,stroke:#333,stroke-width:2px,color:#fff
 ````
+
+## Example for Your Genomics Workflow
+````mermaid
+graph LR
+    A[Sequence reads Raw Data] -->|FastQC/Trimmomatic| B[FASTQ]
+    B -->|BWA/Bowtie2| C[SAM/BAM]
+    C -->|Clean/Sort| D[BAM]
+    D -->|GATK/bcftools| E[VCF]
+    
+    style B fill:#5A9CB5,stroke:#333,stroke-width:2px,color:#001F3D
+    style C fill:#FACE68,stroke:#333,stroke-width:2px,color:#001F3D
+    style D fill:#FAAC68,stroke:#333,stroke-width:2px,color:#fff
+````
+
 
 
 zcat SRR2584863_1.fastq.gz  | head -n 4
