@@ -1,20 +1,35 @@
+markdown# Example in GitHub README.md
+````mermaid
+graph LR
+    A[FASTQ] --> B[Quality Control]
+    B --> C[Alignment]
+    C --> D[Variant Calling]
+````
 
+## Types of Diagrams Mermaid Can Create
 
+1. **Flowcharts** - Like the genomics workflow
+2. **Sequence diagrams** - For showing interactions over time
+3. **Gantt charts** - Project timelines
+4. **Class diagrams** - Software architecture
+5. **State diagrams** - System states
+6. **Entity relationship diagrams** - Database schemas
+7. **Git graphs** - Version control visualization
 
+## Example for Your Genomics Workflow
 ````mermaid
 graph TD
-    A[Sequence reads] -->|FASTQ| B[Quality control]
-    B -->|FASTQ| C[Alignment to Genome]
-    C -->|SAM/BAM| D[Alignment Cleanup]
-    D -->|BAM| E[Variant Calling]
-    E -->|VCF| F[...]
+    A[Sequence readsRaw Data] -->|FASTQ| B[Quality ControlFastQC/Trimmomatic]
+    B -->|FASTQ| C[Alignment to GenomeBWA/Bowtie2]
+    C -->|SAM/BAM| D[Alignment CleanupSort/Mark Duplicates]
+    D -->|BAM| E[Variant CallingGATK/bcftools]
+    E -->|VCF| F[Downstream Analysis]
     
-    style C fill:#ff9500,stroke:#333,stroke-width:2px
-    style D fill:#4169e1,stroke:#333,stroke-width:2px
-    style E fill:#ff9500,stroke:#333,stroke-width:2px
-```
+    style C fill:#ff9500,stroke:#333,stroke-width:2px,color:#fff
+    style D fill:#4169e1,stroke:#333,stroke-width:2px,color:#fff
+    style E fill:#ff9500,stroke:#333,stroke-width:2px,color:#fff
+````
 
-https://en.wikipedia.org/wiki/FASTQ_format
 
 zcat SRR2584863_1.fastq.gz  | head -n 4
 
