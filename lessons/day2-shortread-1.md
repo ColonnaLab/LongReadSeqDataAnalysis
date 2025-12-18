@@ -160,15 +160,3 @@ keep in mind:
 ```diff
 + Use wildcards to process multiple files at once
 ```
-
-```bash
-user1@vm-corso-colonna:~/dc_workshop/data/untrimmed_fastq$ fastqc *.fastq*
-```
-
-##### **FastQC Output Files**
-
-```bash
-user1@vm-corso-colonna:~/dc_workshop/data/untrimmed_fastq$ ls
-SRR2584863_1_fastqc.html  SRR2584863_1_fastqc.zip  SRR2584863_1.fastq.gz
-SRR2584863_2_fastqc.html  SRR2584863_2_fastqc.zip  SRR2584863_2.fastq.gz
-```
