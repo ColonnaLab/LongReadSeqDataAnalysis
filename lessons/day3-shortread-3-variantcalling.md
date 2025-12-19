@@ -40,8 +40,8 @@ user1@vm-corso-colonna:~/seq-analysis/refgenome$ cat ecoli_rel606.fasta | less
 
 ```diff
 Book (Reference):    "The quick brown fox jumps over the lazy dog"
-                              ↑_____________↑
-Sentence fragment:           "brown fox jumps"
+                                ↑_____________↑
+Sentence fragment:             "brown fox jumps"
 (Your DNA read)
 
 In DNA Terms
@@ -50,6 +50,11 @@ Reference DNA:  ...ATCGATCGATCGATCG...
                    ||||||||||||||||
 Your DNA read:     ATCGATCGATCGATCG
 
+Differences between reference and query: 
+| **Mismatches** | Ref: `ATCG`  Read: `ATGG` |
+| **Insertions** | Ref: `AT_CG` Read: `ATACG`|
+| **Deletions**  | Ref: `ATCG`  Read: `AT_G` |
+
 + Key Concepts
 + 1. Reference Genome: it is the complete genomic sequence (template) and it is indexed for fast searching
 + 2. Query Read: it is a short (typically 50-300 bp) or long (typically 10-30 kbp) DNA fragment from sequencing Typically 50-300 bp
@@ -57,13 +62,6 @@ Your DNA read:     ATCGATCGATCGATCG
 + Short Reads:    100-300 bp     |-----|
 + Long Reads:     10,000-50,000 bp |---------------------------|
 + Ultra-long:     >100,000 bp      |-------------------------------------------|
-
-| Differences between ref and query | example |
-|-----------|---------|
-| **Mismatches** | Ref: `ATCG`<br>Read: `ATGG` |
-| **Insertions** | Ref: `AT_CG`<br>Read: `ATACG` |
-| **Deletions** | Ref: `ATCG`<br>Read: `AT_G` |
-
 ```
 
 **Why do we align?**
