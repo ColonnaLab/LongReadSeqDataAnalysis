@@ -117,8 +117,7 @@ Go to `~/seq-analysis`  and align paired-end reads to the reference genome using
 user1@vm-corso-colonna:~/seq-analysis$ bwa mem \
     refgenome/ecoli_rel606.fasta \
     trimmed_all/SRR2584863_1.trimmed.fastq 
-    trimmed_all/SRR2584863_2.trimmed.fastq \
-    > results/sam/SRR2584863.aligned.sam 
+    trimmed_all/SRR2584863_2.trimmed.fastq  > results/sam/SRR2584863.aligned.sam 
 
 + BWA MEM is optimized for reads 70bp-1Mbp
 + Outputs SAM format to stdout (we redirect to file with >)
