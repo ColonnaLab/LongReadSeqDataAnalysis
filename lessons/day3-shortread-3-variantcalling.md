@@ -35,13 +35,64 @@ user1@vm-corso-colonna:~/seq-analysis/refgenome$ cat ecoli_rel606.fasta | less
 
 #### alignment with `bwa`
 
+##### What Does It Mean to "Align" DNA Sequences?
+**Aligning** means finding where a short piece of DNA fits best within a much longer DNA sequence - like finding where a sentence fragment belongs in a book. The computer tries millions of positions to find the best match, accounting for small differences that naturally occur between individuals.
+
+```diff
+Book (Reference):    "The quick brown fox jumps over the lazy dog"
+                              ↑_____________↑
+Sentence fragment:           "brown fox jumps"
+(Your DNA read)
+
+In DNA Terms
+
+Reference DNA:  ...ATCGATCGATCGATCG...
+                   ||||||||||||||||
+Your DNA read:     ATCGATCGATCGATCG
+
++ Key Concepts
++ 1. Reference Genome: it is the complete genomic sequence (template) and it is indexed for fast searching
++ 2. Query Read: it is a short (typically 50-300 bp) or long (typically 10-30 kbp) DNA fragment from sequencing Typically 50-300 bp
+
++ Short Reads:    100-300 bp     |-----|
++ Long Reads:     10,000-50,000 bp |---------------------------|
++ Ultra-long:     >100,000 bp      |-------------------------------------------|
+
+| Differences between ref and query | example |
+|-----------|---------|
+| **Mismatches** | Ref: `ATCG`<br>Read: `ATGG` |
+| **Insertions** | Ref: `AT_CG`<br>Read: `ATACG` |
+| **Deletions** | Ref: `ATCG`<br>Read: `AT_G` |
+
+```
+
+**Why do we align?**
+- To find out *where* in the genome your sequenced DNA fragment came from
+- To identify differences (mutations) between your sample and the reference
+- To reconstruct the complete DNA sequence from millions of short pieces
+
+**Think of it like:**
+- Having a massive jigsaw puzzle (genome)
+- Getting millions of tiny pieces (reads)
+- Finding where each piece fits (alignment)
+- Reconstructing the full picture
+
+
+
+
+| variatnts | example |
+|-----------|---------|
+| **Mismatches** | Ref: `ATCG`<br>Read: `ATGG` |
+| **Insertions** | Ref: `AT_CG`<br>Read: `ATACG` |
+| **Deletions** | Ref: `ATCG`<br>Read: `AT_G` |
+
+
 **[BWA](http://bio-bwa.sourceforge.net/)** (Burrows-Wheeler Aligner) is a software package for mapping low-divergent sequences against a large reference genome, such as the human genome, using the Burrows-Wheeler transform algorithm.
 
 The reference genome must be indexed before alignment:
 
 ```diff
-user1@vm-corso-colonna:~/seq-analysis/variant-calling$ bwa index ../data/ref_genome/ecoli_rel606.fasta
-user1@vm-corso-colonna:~/seq-analysis/refgenome$ bwa index ecoli_rel606.fasta 
++ user1@vm-corso-colonna:~/seq-analysis/refgenome$ bwa index ecoli_rel606.fasta 
 [bwa_index] Pack FASTA... 0.04 sec
 [bwa_index] Construct BWT for the packed sequence...
 [bwa_index] 1.18 seconds elapse.
@@ -58,17 +109,15 @@ ecoli_rel606.fasta.amb  ecoli_rel606.fasta.bwt  ecoli_rel606.fasta.sa
 + Why do we index? Indexing creates a searchable data structure that speeds up alignment
 ```
 
-Go to `~/seq-analysis` Align paired-end reads using BWA-MEM:
+Go to `~/seq-analysis`  and align paired-end reads to the reference genome using BWA-MEM:
 
-```bash
+```diff
 user1@vm-corso-colonna:~/seq-analysis$ bwa mem \
     refgenome/ecoli_rel606.fasta \
     trimmed_all/SRR2584863_1.trimmed.fastq 
     trimmed_all/SRR2584863_2.trimmed.fastq \
     > results/sam/SRR2584863.aligned.sam 
-```
 
-```diff
 + BWA MEM is optimized for reads 70bp-1Mbp
 + Outputs SAM format to stdout (we redirect to file with >)
 + Uses paired-end mode when given two input files
@@ -79,6 +128,14 @@ The alignment produces a file in **SAM (Sequence Alignment/Map)** format,  a tab
 
 The **BAM (Binary Alignment/Map)** is the compressed binary version of SAM, with reduced file size, support for indexing
 and efficient random access
+
+Explore the SAM file that you just produced 
+```diff 
+user1@vm-corso-colonna:~/seq-analysis$ cat results/sam/SRR2584863.aligned.sam | less -S 
+
+user1@vm-corso-colonna:~/seq-analysis$ cat results/sam/SRR2584863.aligned.sam | head -3 
+
+```
 
 The [`SAM/BAM`](https://pubmed.ncbi.nlm.nih.gov/19505943/) file contains : 
     1. **Header Section** (Optional) with metadata about the alignment (e.g. data source information, reference sequence details, algnment method/software used) 
