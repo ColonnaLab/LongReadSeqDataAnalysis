@@ -1,12 +1,11 @@
-I'll create a quiz based on these shell and bioinformatics lessons. Here's a 15-question assessment that covers the key concepts:
+# Final Quiz
 
-# Shell & Bioinformatics Quiz
+Name: ________________Date: ________________
 
-**Name: ________________Date: ________________**
 *Instructions: Answer all questions. Write commands exactly as you would type them.*
 ---
 
-## Part 1: Basic Shell Commands (Questions 1-6)
+## Part 1: Basic Shell Commands 
 
 **1.** What command would you use to find out which directory you are currently in?
 
@@ -35,7 +34,7 @@ Answer: ______________________
 
 ---
 
-## Part 2: File Formats & Quality Control (Questions 7-10)
+## Part 2: File Formats & Quality Control 
 
 **6.** In a FASTQ file, what does each of the 4 lines represent for a single sequence? 
 - Line 1: ______________________
@@ -48,7 +47,7 @@ Answer: ______________________
 Answer: ______________________
 ---
 
-## Part 3: Sequence Analysis Workflow (Questions 11-15)
+## Part 3: Sequence Analysis Workflow 
 
 **8.** Put these file formats in the correct order for a variant calling workflow:
 ___ VCF    ___ FASTQ    ___ SAM    ___ BAM
