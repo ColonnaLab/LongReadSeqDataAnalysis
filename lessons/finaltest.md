@@ -9,9 +9,9 @@ Name: ________________Date: ________________
 #### Part 1: Basic Shell Commands 
 
 **1.** What command would you use to find out which directory you are currently in?
-
-Answer: ______________________
-
+```diff
++Answer: ____________________________________________________________________
+```
 **2.** You are in `/home/user1/` and want to navigate to `/home/user1/seq-analysis/results/`. Write the command:
 
 Answer: ______________________
