@@ -14,7 +14,6 @@ Course material for a Practical Course at the [University of Bari](https://www.u
 | **[Day 3 - Variant Calling](lessons/day3-shortread-3-variantcalling.md)** | 2025/12/19 | [Variant Calling Workflow ](https://datacarpentry.github.io/wrangling-genomics/04-variant_calling.html) | Review [workshop material](https://datacarpentry.github.io/genomics-workshop/)<br>Setup for local machine (Option B) |
 | **Extra** | - | [R for reproducible data analysis](https://swcarpentry.github.io/r-novice-gapminder/) | Install [R](https://www.r-project.org/) (latest version)<br>Install [RStudio Desktop](https://www.rstudio.com/products/rstudio/download/#download) |
 
-
 #### Acknowledgments
 This course material includes content adapted from [Software Carpentry](https://software-carpentry.org/) 
 lessons, which are made available under the [Creative Commons Attribution 
