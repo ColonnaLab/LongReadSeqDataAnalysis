@@ -6,37 +6,8 @@ This page contain a short and adapted version of the Software Carpentry lesson [
 This workflow demonstrates how to identify genetic variants from aligned sequencing data. Each step transforms the data from raw alignments to filtered variant calls ready for downstream analysis. The pipeline uses standard tools like BWA for alignment, SAMtools for processing, and bcftools for variant calling.
 
 
-#### getting the reference genome 
-Before calling variants, we need to align our reads to a reference genome. We will download the reference genome for E. coli (REL606) from the NCBI website and keep it in a dedicated folder.  
-
-Within `seq-analysis` make a dir called refgenome and navigate there: 
-```diff
-user1@vm-corso-colonna:~/seq-analysis$ mkdir refgenome
-user1@vm-corso-colonna:~/seq-analysis$ cd refgenome/
-user1@vm-corso-colonna:~/seq-analysis/refgenome$ 
-```
-
-Download, gunzip, and explore the reference genome: 
-```diff 
-
-+ COMMAND  curl - transfer a URL
-
-user1@vm-corso-colonna:~/seq-analysis/refgenome$ curl -L -o ecoli_rel606.fasta.gz \
-    ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/000/017/985/GCA_000017985.1_ASM1798v1/GCA_000017985.1_ASM1798v1_genomic.fna.gz
-
-+ COMMAND gunzip 
-user1@vm-corso-colonna:~/seq-analysis/refgenome$ gunzip ecoli_rel606.fasta.gz
-user1@vm-corso-colonna:~/seq-analysis/refgenome$ ls 
-
-+ check the file name, what is changed? 
-
-user1@vm-corso-colonna:~/seq-analysis/refgenome$ cat ecoli_rel606.fasta | less 
-```
-
-#### alignment with `bwa`
-
-##### What Does It Mean to "Align" DNA Sequences?
-**Aligning** means finding where a short piece of DNA fits best within a much longer DNA sequence - like finding where a sentence fragment belongs in a book. The computer tries millions of positions to find the best match, accounting for small differences that naturally occur between individuals.
+#### What Does It Mean to "Align" DNA Sequences?
+The first step in variant calling is  the sequence alignment. **Aligning** means finding where a short piece of DNA fits best within a much longer DNA sequence - like finding where a sentence fragment belongs in a book. The computer tries millions of positions to find the best match, accounting for small differences that naturally occur between individuals.
 
 ```diff
 Book (Reference):    "The quick brown fox jumps over the lazy dog"
@@ -76,16 +47,48 @@ Differences between reference and query:
 - Reconstructing the full picture
 
 
+#### Getting the reference genome 
+Before calling variants, we need to align our reads to a reference genome. We will download the reference genome for E. coli (REL606) from the NCBI website and keep it in a dedicated folder.  
 
+Within `seq-analysis` make a dir called refgenome and navigate there: 
+```diff
+user1@vm-corso-colonna:~/seq-analysis$ mkdir refgenome
+user1@vm-corso-colonna:~/seq-analysis$ cd refgenome/
+user1@vm-corso-colonna:~/seq-analysis/refgenome$ 
+```
 
-| variatnts | example |
-|-----------|---------|
-| **Mismatches** | Ref: `ATCG`<br>Read: `ATGG` |
-| **Insertions** | Ref: `AT_CG`<br>Read: `ATACG` |
-| **Deletions** | Ref: `ATCG`<br>Read: `AT_G` |
+Download, gunzip, and explore the reference genome: 
+```diff 
 
++ COMMAND  curl - transfer a URL
 
-**[BWA](http://bio-bwa.sourceforge.net/)** (Burrows-Wheeler Aligner) is a software package for mapping low-divergent sequences against a large reference genome, such as the human genome, using the Burrows-Wheeler transform algorithm.
+user1@vm-corso-colonna:~/seq-analysis/refgenome$ curl -L -o ecoli_rel606.fasta.gz \
+    ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/000/017/985/GCA_000017985.1_ASM1798v1/GCA_000017985.1_ASM1798v1_genomic.fna.gz
+
++ COMMAND gunzip 
+user1@vm-corso-colonna:~/seq-analysis/refgenome$ gunzip ecoli_rel606.fasta.gz
+user1@vm-corso-colonna:~/seq-analysis/refgenome$ ls 
+
++ check the file name, what is changed? 
+
+user1@vm-corso-colonna:~/seq-analysis/refgenome$ cat ecoli_rel606.fasta | less 
+```
+
+#### preparing the filesystem for results 
+
+mkdir res 
+
+```
+user1@vm-corso-colonna:~/seq-analysis$ mkdir -p results/sam results/bam results/bcf results/vcf
+user1@vm-corso-colonna:~/seq-analysis$ ls 
+fastqc-res  refgenome  results  trimmed  trimmed_all
+user1@vm-corso-colonna:~/seq-analysis$ ls results/
+bam  bcf  sam  vcf
+user1@vm-corso-colonna:~/seq-analysis$ 
+```
+
+#### Alignment with `bwa`
+>> **[BWA](http://bio-bwa.sourceforge.net/)** (Burrows-Wheeler Aligner) is a software package for mapping low-divergent sequences against a large reference genome, such as the human genome, using the Burrows-Wheeler transform algorithm.
 
 The reference genome must be indexed before alignment:
 
@@ -121,19 +124,28 @@ user1@vm-corso-colonna:~/seq-analysis$ bwa mem \
 + Uses paired-end mode when given two input files
 ```
 
+Explore the SAM file that you just produced 
+```diff 
+user1@vm-corso-colonna:~/seq-analysis$ cat results/sam/SRR2584863.aligned.sam | less -S 
+
+user1@vm-corso-colonna:~/seq-analysis$ cat results/sam/SRR2584863.aligned.sam | head -3 
+@SQ	SN:CP000819.1	LN:4629812
+@PG	ID:bwa	PN:bwa	VN:0.7.17-r1188	CL:bwa mem refgenome/ecoli_rel606.fasta trimmed_all/SRR2584863_1.trimmed.fastq trimmed_all/SRR2584863_2.trimmed.fastq
+SRR2584863.1	83	CP000819.1	3339203	60	102M	=	3338771	-534	TACCGTTAACTCTCAGGATCAGGTAACCCAAAAACCCCTGCGTGACTCGGTTAAACAGGCACTGAAGAACTATTTTGCTCAACTGAATGGTCAGGATGTGAA	8(5@>3C>C@AC@@AACCCCADDBBB:DCAFFFHFJIIGEGGCCEDJJIJHHFIJGGEFDDEJIIIFGJJIIIJJJJIIJJJIJJJJIJHHHHGFFFFFCCC	NM:i:0	MD:Z:102	MC:Z:19M	AS:i:102	XS:i:0
+user1@vm-corso-colonna:~/seq-analysis$ 
+```
+
 ##### understanding the SAM/BAM file format 
 The alignment produces a file in **SAM (Sequence Alignment/Map)** format,  a tab-delimited text file containing alignment information for sequencing reads against a reference genome.
 
 The **BAM (Binary Alignment/Map)** is the compressed binary version of SAM, with reduced file size, support for indexing
 and efficient random access
 
-Explore the SAM file that you just produced 
-```diff 
-user1@vm-corso-colonna:~/seq-analysis$ cat results/sam/SRR2584863.aligned.sam | less -S 
-
-user1@vm-corso-colonna:~/seq-analysis$ cat results/sam/SRR2584863.aligned.sam | head -3 
-
-```
+Key Features of `SAM/BAM` files are: 
+- **Human-readable**: SAM files can be viewed and edited with text editors
+- **Standardized**: Consistent format across different aligners
+- **Flexible**: Supports optional fields for tool-specific information
+- **Comprehensive**: Contains all alignment information in one place
 
 The [`SAM/BAM`](https://pubmed.ncbi.nlm.nih.gov/19505943/) file contains : 
     1. **Header Section** (Optional) with metadata about the alignment (e.g. data source information, reference sequence details, algnment method/software used) 
@@ -154,30 +166,56 @@ Each alignment line contains **11 mandatory fields** plus optional fields:
 | SEQ | 10 | Read sequence |
 | QUAL | 11 | ASCII of base quality scores |
 
-Here is an example of a SAM entry
 
+#### Convert SAM to BAM, sort 
+>> **[SAMtools](http://www.htslib.org/)** is a suite of programs for interacting with high-throughput sequencing data in SAM/BAM format.
+
+Using the samtools program we will convert the SAM file to BAM format in three steps 
+1. Go form SAM to BAM with the view command tellinmg this command that the input is in SAM format (-S) and to output BAM format (-b)
+2. Sort the BAM file by coordinates (useful for next steps)
+3. Index the BAM file to make it easily accessible
+
+```diff
++ # step 1 
+user1@vm-corso-colonna:~/seq-analysis$ samtools view -S -b results/sam/SRR2584863.aligned.sam > results/bam/SRR2584863.aligned.bam
+user1@vm-corso-colonna:~/seq-analysis$ ls results/bam/
+SRR2584863.aligned.bam
+
++ # step 2 
+user1@vm-corso-colonna:~/seq-analysis$ samtools sort -o results/bam/SRR2584863.aligned.sorted.bam results/bam/SRR2584863.aligned.bam
+user1@vm-corso-colonna:~/seq-analysis$ ls results/bam/
+SRR2584863.aligned.bam  SRR2584863.aligned.sorted.bam
+
++ #step 3 
+user1@vm-corso-colonna:~/seq-analysis$ samtools index results/bam/SRR2584863.aligned.sorted.bam
+user1@vm-corso-colonna:~/seq-analysis$ ls results/bam/
+SRR2584863.aligned.bam  SRR2584863.aligned.sorted.bam  SRR2584863.aligned.sorted.bam.bai
 ```
-read_001  163  chr1  12345  60  100M  =  12445  200  AGCTTAGCTAGCTACCTATATCTTGGTCTTGGCCG  <<<<<<<<<<<<<<<<<<<<<:<9/,&,22;;<<<  NM:i:1  MD:Z:99A0  AS:i:98
+
+We can now visualize the alignment in the BAM file using samtool tview:
+
+```diff
++ check the options for samtools tview 
+
+user1@vm-corso-colonna:~/seq-analysis$ samtools tview 
+Usage: samtools tview [options] <aln.bam> [ref.fasta]
+Options:
+   -d display      output as (H)tml or (C)urses or (T)ext 
+   -X              include customized index file
+   -p chr:pos      go directly to this position
+   -s STR          display only reads from this sample or group
+   -w INT          display width (with -d T only)
+      --input-fmt-option OPT[=VAL]
+               Specify a single input file format option in the form
+               of OPTION or OPTION=VALUE
+      --reference FILE
+               Reference sequence FASTA FILE [null]
+      --verbosity INT
+               Set level of verbosity
+
+
++ visualize the alignment 
+user1@vm-corso-colonna:~/seq-analysis$ samtools tview  results/bam/SRR2584863.aligned.sorted.bam refgenome/ecoli_rel606.fasta
 ```
-
-Key Features are: 
-- **Human-readable**: SAM files can be viewed and edited with text editors
-- **Standardized**: Consistent format across different aligners
-- **Flexible**: Supports optional fields for tool-specific information
-- **Comprehensive**: Contains all alignment information in one place
-
-##### preparing the filesystem for results 
-
-mkdir res 
-
-```
-user1@vm-corso-colonna:~/seq-analysis$ mkdir -p results/sam results/bam results/bcf results/vcf
-user1@vm-corso-colonna:~/seq-analysis$ ls 
-fastqc-res  refgenome  results  trimmed  trimmed_all
-user1@vm-corso-colonna:~/seq-analysis$ ls results/
-bam  bcf  sam  vcf
-user1@vm-corso-colonna:~/seq-analysis$ 
-```
-
 
 
