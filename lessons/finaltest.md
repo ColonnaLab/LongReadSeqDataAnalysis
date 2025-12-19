@@ -1,11 +1,12 @@
-# Final Quiz
+### Basic Bioinformatics and Long-Read Sequencing Data Analysis
+##### Final Test 
 
 Name: ________________Date: ________________
 
 *Instructions: Answer all questions. Write commands exactly as you would type them.*
 ---
 
-## Part 1: Basic Shell Commands 
+#### Part 1: Basic Shell Commands 
 
 **1.** What command would you use to find out which directory you are currently in?
 
@@ -34,7 +35,7 @@ Answer: ______________________
 
 ---
 
-## Part 2: File Formats & Quality Control 
+#### Part 2: File Formats & Quality Control 
 
 **6.** In a FASTQ file, what does each of the 4 lines represent for a single sequence? 
 - Line 1: ______________________
@@ -47,7 +48,7 @@ Answer: ______________________
 Answer: ______________________
 ---
 
-## Part 3: Sequence Analysis Workflow 
+#### Part 3: Sequence Analysis Workflow 
 
 **8.** Put these file formats in the correct order for a variant calling workflow:
 ___ VCF    ___ FASTQ    ___ SAM    ___ BAM
@@ -71,7 +72,8 @@ Answer: ______________________
 
 ---
 
-**Bonus Question ** 
+**Bonus Question**
 What does SSH stand for and why do bioinformaticians need to use it?
+
 Answer: ______________________
 ---
