@@ -3,8 +3,11 @@
 ## Variant Calling 
 This page contain a short and adapted version of the Software Carpentry lesson [Variant Calling Workflow ](https://datacarpentry.github.io/wrangling-genomics/04-variant_calling.html). We will use it as notes to key concepts we will discuss during our lesson
 
-This workflow demonstrates how to identify genetic variants from aligned sequencing data. Each step transforms the data from raw alignments to filtered variant calls ready for downstream analysis. The pipeline uses standard tools like BWA for alignment, SAMtools for processing, and bcftools for variant calling.
+This workflow demonstrates how to identify genetic variants from aligned sequencing data. Each step transforms the data from raw alignments to filtered variant calls ready for downstream analysis. The pipeline uses standard tools like BWA for alignment, SAMtools for processing, and freebayes for variant calling. Here is an overview of the vomplete workflow: 
 
+```diff
++ Reads → BWA → SAM → SAMtools → BAM → FreeBayes → VCF → BCFtools → Filtered VCF
+```
 
 #### What Does It Mean to "Align" DNA Sequences?
 The first step in variant calling is  the sequence alignment. **Aligning** means finding where a short piece of DNA fits best within a much longer DNA sequence - like finding where a sentence fragment belongs in a book. The computer tries millions of positions to find the best match, accounting for small differences that naturally occur between individuals.
@@ -30,7 +33,7 @@ Differences between reference and query:
 + 1. Reference Genome: it is the complete genomic sequence (template) and it is indexed for fast searching
 + 2. Query Read: it is a short (typically 50-300 bp) or long (typically 10-30 kbp) DNA fragment from sequencing Typically 50-300 bp
 
-+ Short Reads:    100-300 bp     |-----|
++ Short Reads:    100-300 bp       |-----|
 + Long Reads:     10,000-50,000 bp |---------------------------|
 + Ultra-long:     >100,000 bp      |-------------------------------------------|
 ```
@@ -47,7 +50,7 @@ Differences between reference and query:
 - Reconstructing the full picture
 
 
-#### Getting the reference genome 
+#### 1. Getting the reference genome 
 Before calling variants, we need to align our reads to a reference genome. We will download the reference genome for E. coli (REL606) from the NCBI website and keep it in a dedicated folder.  
 
 Within `seq-analysis` make a dir called refgenome and navigate there: 
@@ -74,10 +77,8 @@ user1@vm-corso-colonna:~/seq-analysis/refgenome$ ls
 user1@vm-corso-colonna:~/seq-analysis/refgenome$ cat ecoli_rel606.fasta | less 
 ```
 
-#### preparing the filesystem for results 
-
-mkdir res 
-
+#### 2. Preparing the filesystem for results 
+We will make a number of directories where to put our results  
 ```
 user1@vm-corso-colonna:~/seq-analysis$ mkdir -p results/sam results/bam results/bcf results/vcf
 user1@vm-corso-colonna:~/seq-analysis$ ls 
@@ -87,7 +88,7 @@ bam  bcf  sam  vcf
 user1@vm-corso-colonna:~/seq-analysis$ 
 ```
 
-#### Alignment with `bwa`
+#### 3. Alignment with `bwa`
 >> **[BWA](http://bio-bwa.sourceforge.net/)** (Burrows-Wheeler Aligner) is a software package for mapping low-divergent sequences against a large reference genome, such as the human genome, using the Burrows-Wheeler transform algorithm.
 
 The reference genome must be indexed before alignment:
@@ -135,10 +136,7 @@ SRR2584863.1	83	CP000819.1	3339203	60	102M	=	3338771	-534	TACCGTTAACTCTCAGGATCAG
 user1@vm-corso-colonna:~/seq-analysis$ 
 ```
 
-##### understanding the SAM/BAM file format 
-The alignment produces a file in **SAM (Sequence Alignment/Map)** format,  a tab-delimited text file containing alignment information for sequencing reads against a reference genome.
-
-The **BAM (Binary Alignment/Map)** is the compressed binary version of SAM, with reduced file size, support for indexing
+The alignment produces a file in **SAM (Sequence Alignment/Map)** format,  a tab-delimited text file containing alignment information for sequencing reads against a reference genome. The **BAM (Binary Alignment/Map)** is the compressed binary version of SAM, with reduced file size, support for indexing
 and efficient random access
 
 Key Features of `SAM/BAM` files are: 
@@ -167,8 +165,8 @@ Each alignment line contains **11 mandatory fields** plus optional fields:
 | QUAL | 11 | ASCII of base quality scores |
 
 
-#### Convert SAM to BAM, sort 
->> **[SAMtools](http://www.htslib.org/)** is a suite of programs for interacting with high-throughput sequencing data in SAM/BAM format.
+#### 4. Convert SAM to BAM, sort 
+>> **[SAMtools](http://www.htslib.org/)** is a suite of programs for interacting with high-throughput sequencing data in SAM/BAM format
 
 Using the samtools program we will convert the SAM file to BAM format in three steps 
 1. Go form SAM to BAM with the view command tellinmg this command that the input is in SAM format (-S) and to output BAM format (-b)
@@ -219,3 +217,34 @@ user1@vm-corso-colonna:~/seq-analysis$ samtools tview  results/bam/SRR2584863.al
 ```
 
 
+#### 5. Variant calling 
+>> **[FreeBayes](https://github.com/freebayes/freebayes)** is a  Bayesian genetic variant detector designed to find small polymorphisms, specifically SNPs (single-nucleotide polymorphisms), indels (insertions and deletions), MNPs (multi-nucleotide polymorphisms), and complex events (composite insertion and substitution events) smaller than the length of a short-read sequencing alignment.
+
+We will use `freebayes` to produce the vcf file. First explore the options of `freebayes`,  do the variant calling, and explore the output vcf: 
+
+```diff
+user1@vm-corso-colonna:~/seq-analysis$ freebayes -h  | less 
+
+
+user1@vm-corso-colonna:~/seq-analysis$ freebayes -f refgenome/ecoli_rel606.fasta results/bam/SRR2584863.aligned.sorted.bam > results/vcf/myfirst.vcf 
+user1@vm-corso-colonna:~/seq-analysis$ ls results/vcf/
+myfirst.vcf
+
++ open the file inspect it and count the number of lines 
+user1@vm-corso-colonna:~/seq-analysis$ cat results/vcf/myfirst.vcf | less -S 
+
+user1@vm-corso-colonna:~/seq-analysis$ cat results/vcf/myfirst.vcf | wc -l 
+```
+
+
+Many of the variants have very low quality, therefore we will filter out those variants with poor quality using bcftools: 
+>> **[BCFtools](http://www.htslib.org/)** is a set of utilities that manipulate variant calls in the Variant Call Format (VCF) and its binary counterpart BCF, including filtering, merging, comparing, and annotating variants from multiple samples.
+```diff 
+user1@vm-corso-colonna:~/seq-analysis$ bcftools filter -i 'QUAL>20' results/vcf/myfirst.vcf > results/vcf/myfirst.filtered.vcf 
+user1@vm-corso-colonna:~/seq-analysis$ cat results/vcf/myfirst.filtered.vcf | less -S 
+user1@vm-corso-colonna:~/seq-analysis$ cat results/vcf/myfirst.filtered.vcf | wc -l 
+```
+
+```diff
+!EXERCISE compare the number of variants in the vcf before and after filtering
+```
