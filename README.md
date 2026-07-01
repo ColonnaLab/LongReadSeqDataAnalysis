@@ -1,17 +1,19 @@
 ## Basic Bioinformatics and Long-Read Sequencing Data Analysis
 Course material for a Practical Course at the [University of Bari](https://www.uniba.it/en/) 
 
+[Software used in this course](SOFTWARE.md)
+
 
 ### 2025/12/16-19 -  Introductory Module 
 *Fundamentals of Bioinformatics and bioinformatics environment setup for DNA sequence data analysis of short read sequence data. Main genomic data formats (FASTA, FASTQ, SAM/BAM, VCF). Hands-on exercises on all topics*
 
 | Day and link to lesson | Date | Topics | Preparation Required |
 |:---:|:----:|--------|---------------------|
-|**[Day 1 - shh](lessons/day1-ssh.md)**| 2025/12/16 |Connection to remote machine |none |
-| **[Day 1 - bash](lessons/day1-shell.md)** | 2025/12/17 | [The shell](https://swcarpentry.github.io/shell-novice/) | Download/install [the shell](https://carpentries.github.io/workshop-template/install_instructions/#shell)<br>|
-| **[Day 2 - FastQC](lessons/day2-shortread-1-QC.md)** | 2025/12/18 | [Assessing Read Quality](https://datacarpentry.github.io/wrangling-genomics/02-quality-control.html) | Review [workshop material](https://datacarpentry.github.io/genomics-workshop/)<br>Setup for local machine (Option B)  |
-| **[Day 3 - Trimmomatic](lessons/day3-shortread-2-trimming.md)** | 2025/12/19 | [Trimming and Filtering ](https://datacarpentry.github.io/wrangling-genomics/03-trimming.html) | Review [workshop material](https://datacarpentry.github.io/genomics-workshop/)<br>Setup for local machine (Option B) |
-| **[Day 3 - Variant Calling](lessons/day3-shortread-3-variantcalling.md)** | 2025/12/19 | [Variant Calling Workflow ](https://datacarpentry.github.io/wrangling-genomics/04-variant_calling.html) | Review [workshop material](https://datacarpentry.github.io/genomics-workshop/)<br>Setup for local machine (Option B) |
+|**[Day 1 - shh](lessons/0-ssh.md)**| 2025/12/16 |Connection to remote machine |none |
+| **[Day 1 - bash](lessons/0-shell.md)** | 2025/12/17 | [The shell](https://swcarpentry.github.io/shell-novice/) | Download/install [the shell](https://carpentries.github.io/workshop-template/install_instructions/#shell)<br>|
+| **[Day 2 - FastQC](lessons/1-shortreads-QC.md)** | 2025/12/18 | [Assessing Read Quality](https://datacarpentry.github.io/wrangling-genomics/02-quality-control.html) | Review [workshop material](https://datacarpentry.github.io/genomics-workshop/)<br>Setup for local machine (Option B)  |
+| **[Day 3 - Trimmomatic](lessons/2-shortreads-trimming.md)** | 2025/12/19 | [Trimming and Filtering ](https://datacarpentry.github.io/wrangling-genomics/03-trimming.html) | Review [workshop material](https://datacarpentry.github.io/genomics-workshop/)<br>Setup for local machine (Option B) |
+| **[Day 3 - Variant Calling](lessons/3-shortreads-variantcalling.md)** | 2025/12/19 | [Variant Calling Workflow ](https://datacarpentry.github.io/wrangling-genomics/04-variant_calling.html) | Review [workshop material](https://datacarpentry.github.io/genomics-workshop/)<br>Setup for local machine (Option B) |
 | **Extra** | - | [R for reproducible data analysis](https://swcarpentry.github.io/r-novice-gapminder/) | Install [R](https://www.r-project.org/) (latest version)<br>Install [RStudio Desktop](https://www.rstudio.com/products/rstudio/download/#download) |
 
 #### Acknowledgments

@@ -54,7 +54,7 @@ CCCFFFFFGHHHHJIJJJJIJJJIIJJJJIIIJJGFIIIJEDDFEGGJIFHHJIJJDECCGGEGIIJFHFFFACD:BBBD
 ! How is the quality at the end of the read? 
 ```
 
-### **Quality Control of Genomics Data**
+### **2. Quality Control of Genomics Data**
 The following contains a short and adapted version of the Data Carpentry lesson [Assessing Read Quality](https://datacarpentry.github.io/wrangling-genomics/02-quality-control.html). We will use it as notes to key concepts we will discuss during our lesson.
 
 ##### **Why Quality Control in Genomics?**
@@ -72,7 +72,7 @@ Quality control helps us identify and remove problematic data before analysis. P
 - Q30 = 99.9% accuracy (1 error in 1000 bases)
 - Q20 = 99% accuracy (1 error in 100 bases)
 
-### **Running FastQC**
+### **3. Running FastQC**
 
 [`FastQC`](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) is a software that performs quality control checks on raw sequence data
 
@@ -115,7 +115,7 @@ Approx 95% complete for SRR2584863_1.fastq.gz
 Analysis complete for SRR2584863_1.fastq.g
 ```
 
-### **Interpreting FastQC Results**
+### **4. Interpreting FastQC Results**
 `FastQC` generates two output files: an HTML report and a ZIP archive. HTML files are web-based documents that require a browser to view properly - they can not be opened directly on command-line servers. To view the HTML report, we need to **transfer it from the remote server to our local computer** where we can open it in a web browser. This file transfer process is an essential skill for working with bioinformatics pipelines on computing clusters.
 
 ![scp](../img/SCP.png)
@@ -148,7 +148,7 @@ keep in mind:
 + Adapter content - Presence of sequencing adapters
 ```
 
-### **Running FastQC on Multiple Files**
+### **5. Running FastQC on Multiple Files**
 
 ```diff
 + Use wildcards to process multiple files at once

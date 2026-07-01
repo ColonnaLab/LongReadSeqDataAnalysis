@@ -1,0 +1,1 @@
+Allineamento di long-read al genoma di riferimento. Preset e parametri per HiFi/ONT. Gestione di file BAM long-read e visualizzazione. Confronto qualitativo con allineamenti short-read.

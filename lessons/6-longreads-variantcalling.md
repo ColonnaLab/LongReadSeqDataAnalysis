@@ -1,0 +1,1 @@
+Variant calling da long-read: analisi di SNV e varianti strutturali (DEL, INS, DUP, INV, TRA). Confronto tra SV calling read-based e basato su allineamento assembly-vs-reference (Saffire). Pipeline pratica di variant calling da dati long-read, generazione dei file VCF, annotazione e filtraggio.
