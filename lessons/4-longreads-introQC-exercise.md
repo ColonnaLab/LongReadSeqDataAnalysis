@@ -1,4 +1,3 @@
-### Data set 
 ## Dataset description
 
 In this practical, we will analyse public Oxford Nanopore long-read sequencing data from the methicillin-resistant bacterium *Staphylococcus aureus* (MRSA), strain KUN1163. MRSA is a drug-resistant form of *S. aureus*. The dataset is suitable for a bacterial genomics workflow because the genome is relatively small and has a high sequencing depth.
@@ -61,16 +60,34 @@ samtools faidx reference/KUN1163_reference.fasta
 
 The file `reference/KUN1163_reference.fasta` should be used for long-read alignment and coverage analysis.
 
-### Quality Control with Nanoplot 
+##  Organizing the space on you computer(s)
+
+The most important part of your work is to **be organized**. You will generate many files and if you do not keep track of them you will mix and loose most of your job. 
+
+You will work both on the **remote server** and on your **local machine**, first think to do is to create folders in both places 
+
+```bash 
++ on your local machine
+
+mkdir lr-local-work 
+
++ on the remote server 
+user1@vm-corso-colonna:~$ mkdir lr-working
+user1@vm-corso-colonna:~$ cd  lr-working
+
+``` 
+
+
+## Quality Control with SeqKit and Nanoplot 
 
 this is where the data lives 
 
 ```bash 
-user1@vm-corso-colonna:~$ ls data-longreads
+user1@vm-corso-colonna:~$ ls ../data-longreads
 DRR187567  fastq  reference
-user1@vm-corso-colonna:~$ ls data-longreads/fastq/
+user1@vm-corso-colonna:~$ ls ../data-longreads/fastq/
 DRR187567.fastq.gz
-user1@vm-corso-colonna:~$ ls data-longreads/reference/
+user1@vm-corso-colonna:~$ ls ../data-longreads/reference/
 KUN1163_reference.fasta  KUN1163_reference.fasta.fai
 user1@vm-corso-colonna:~$ 
 ```
@@ -83,7 +100,7 @@ user1@vm-corso-colonna:~$
   - Estimate total yield in bases
   - Summarize read length statistics
   - Summarize read quality statistics
-  - Generate an HTML QC report with plots
+  - Generate QC plots as image files
 
 ```diff
 ! EXERCISE: Move to your home folder
@@ -137,13 +154,13 @@ user1@vm-corso-colonna:~$ seqkit stats data-longreads/fastq/DRR187567.fastq.gz
 ! 6. N50
 ```
 
-- Create a dedicated output folder for the NanoPlot report:
+- Create a dedicated output folder for the NanoPlot results:
 
 ```bash
 user1@vm-corso-colonna:~$ mkdir -p qc_nanoplot
 ```
 
-- Use `NanoPlot` to generate plots and an HTML report:
+- Use `NanoPlot` to generate plots as PNG files:
   - Read length distribution
   - Quality score distribution
   - Yield summary
@@ -154,27 +171,42 @@ user1@vm-corso-colonna:~$ mkdir -p qc_nanoplot
 + --fastq: input FASTQ file
 + --outdir: output directory
 + --prefix: prefix for output files
++ --format: output plot format, for example png or pdf
 ```
 
 ```bash
 user1@vm-corso-colonna:~$ NanoPlot \
-  --fastq data-longreads/fastq/DRR187567.fastq.gz \
-  --outdir data-longreads/qc_nanoplot \
-  --prefix DRR187567_
-```
+  --fastq ../data-longreads/fastq/DRR187567.fastq.gz \
+  --outdir qc_nanoplot \
+  --prefix DRR187567_ \
 
-- Inspect the output folder:
-  - HTML report
-  - Summary statistics
-  - Plots in image format
-  - Log files
-
-```bash
-user1@vm-corso-colonna:~$ ls -lh data-longreads/qc_nanoplot/
 ```
 
 ```diff
-! EXERCISE: Open the NanoPlot HTML report
+! To save plots as png or PDF instead, add :
+! --format png
+!or :
+! --format pdf
+```
+
+- Inspect the output folder:
+  - Summary statistics
+  - Plots in PNG format
+  - Log files
+
+```bash
+user1@vm-corso-colonna:~$ ls -lh qc_nanoplot/
+```
+
+- Copy the NanoPlot output locally, since it is not possible to visualize png or pdf on the remote machine as it is configured now: 
+
+```bash
+lr-local-work$ scp  user1@212.189.205.193:/home/user1/lr-working/qc_nanoplot/* .
+```
+
+
+```diff
+! EXERCISE: Open the NanoPlot PNG plots
 ! Identify:
 ! 1. the read length distribution
 ! 2. the quality distribution
