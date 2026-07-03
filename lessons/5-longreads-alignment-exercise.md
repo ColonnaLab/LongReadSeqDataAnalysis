@@ -144,6 +144,9 @@ user1@vm-corso-colonna:~/lr-working$ ls -lh bam/
 
 ### **5. Faster Alternative: Pipe minimap2 into samtools**
 
+**(Do not usetoo much memory for the course computer !!!)**
+
+
 The previous steps are useful for learning, but they create a large intermediate SAM file. In real workflows, it is common to pipe `minimap2` directly into `samtools sort`.
 
 ```bash
@@ -170,7 +173,7 @@ Use `samtools flagstat` to summarize mapped and unmapped reads:
 
 ```bash
 user1@vm-corso-colonna:~/lr-working$ samtools flagstat \
-  bam/DRR187567.KUN1163.minimap2.sorted.bam \
+  bam/DRR187567.KUN1163.sorted.bam \
   > alignment/DRR187567.flagstat.txt
 ```
 
@@ -182,9 +185,15 @@ user1@vm-corso-colonna:~/lr-working$ cat alignment/DRR187567.flagstat.txt
 
 Use `samtools idxstats` to count reads assigned to each reference sequence:
 
+If you see a warning such as `fail to load index`, create the BAM index first:
+
+```bash
+user1@vm-corso-colonna:~/lr-working$ samtools index bam/DRR187567.KUN1163.sorted.bam
+```
+
 ```bash
 user1@vm-corso-colonna:~/lr-working$ samtools idxstats \
-  bam/DRR187567.KUN1163.minimap2.sorted.bam \
+  bam/DRR187567.KUN1163.sorted.bam \
   > alignment/DRR187567.idxstats.txt
 ```
 
@@ -198,6 +207,140 @@ user1@vm-corso-colonna:~/lr-working$ cat alignment/DRR187567.idxstats.txt
 ! EXERCISE: How many reads mapped to the plasmid?
 ```
 
+### **6a. Unmapped reads**
+
+The **unmapped reads** are counted in `flagstat`, but we can also extract them from the BAM file. In SAM/BAM format, unmapped reads are records with the SAM flag `0x4`.
+
+Confirm the number of unmapped reads:
+
+```bash
+user1@vm-corso-colonna:~/lr-working$ samtools view \
+  -c \
+  -f 4 \
+  bam/DRR187567.KUN1163.sorted.bam
+```
+
+```diff
++ -c: count records instead of printing them
++ -f 4: keep only reads with the unmapped flag
+```
+
+Look at the first unmapped reads:
+
+```bash
+user1@vm-corso-colonna:~/lr-working$ samtools view \
+  -f 4 \
+  bam/DRR187567.KUN1163.minimap2.sorted.bam \
+  | head
+```
+
+Save the unmapped reads as a separate BAM file:
+
+```bash
+user1@vm-corso-colonna:~/lr-working$ samtools view \
+  -b \
+  -f 4 \
+  -o alignment/DRR187567.unmapped.bam \
+  bam/DRR187567.KUN1163.minimap2.sorted.bam
+```
+
+Extract the unmapped reads to FASTQ for quality control or taxonomic classification:
+
+```bash
+user1@vm-corso-colonna:~/lr-working$ samtools fastq \
+  -f 4 \
+  bam/DRR187567.KUN1163.minimap2.sorted.bam \
+  > alignment/DRR187567.unmapped.fastq
+```
+
+Save only the unmapped read IDs:
+
+```bash
+user1@vm-corso-colonna:~/lr-working$ samtools view \
+  -f 4 \
+  bam/DRR187567.KUN1163.minimap2.sorted.bam \
+  | cut -f1 \
+  > alignment/DRR187567.unmapped_read_ids.txt
+```
+
+Check the files produced:
+
+```bash
+user1@vm-corso-colonna:~/lr-working$ ls -lh alignment/DRR187567.unmapped*
+```
+
+```diff
+! EXERCISE: How many reads are unmapped?
+! EXERCISE: Why might a read not align to the KUN1163 reference?
+! EXERCISE: What could you do next with unmapped reads?
+```
+
+### **6b. Count SAM flag values**
+
+The second column of a SAM/BAM alignment record is the **FLAG** field. It stores information about the alignment status of each read using numeric codes.
+
+We can count how many records have each flag value:
+
+```bash
+user1@vm-corso-colonna:~/lr-working$ samtools view \
+  bam/DRR187567.KUN1163.sorted.bam \
+  | cut -f2 \
+  | sort \
+  | uniq -c
+```
+
+Example output:
+
+```text
+  45324 0
+  45245 16
+   1493 2048
+   1601 2064
+    656 256
+    739 272
+    719 4
+```
+
+Interpretation of the observed flag values:
+
+| Flag | Hex | Count | Meaning |
+|---:|---:|---:|---|
+| `0` | `0x0` | 45,324 | **Primary mapped alignment**, forward strand |
+| `16` | `0x10` | 45,245 | **Primary mapped alignment**, reverse strand |
+| `256` | `0x100` | 656 | **Secondary alignment**, forward strand |
+| `272` | `0x110` | 739 | **Secondary alignment**, reverse strand (`256 + 16`) |
+| `2048` | `0x800` | 1,493 | **Supplementary alignment**, forward strand |
+| `2064` | `0x810` | 1,601 | **Supplementary alignment**, reverse strand (`2048 + 16`) |
+| `4` | `0x4` | 719 | **Unmapped read** |
+
+Summary:
+
+```text
+45,324 + 45,245 = 90,569 primary mapped
+656 + 739         = 1,395 secondary
+1,493 + 1,601     = 3,094 supplementary
+719               = unmapped
+--------------------------------
+                  = 95,777 total records
+```
+
+Key distinction:
+
+- **Primary**: the aligner's main placement for a read
+- **Secondary**: an alternative full alignment for the same read, usually due to repeated or similar sequence
+- **Supplementary**: a split alignment, where different segments of one read map separately; common with long reads, chimeric molecules, structural variation, or reads spanning rearrangements
+- **Reverse strand (`+16`)**: normal orientation information, not a warning
+- **Unmapped (`4`)**: no acceptable placement found in the reference
+
+Because this dataset is single-end Oxford Nanopore data, there are no paired-end flag bits such as `1`, `2`, `64`, `128`, or properly paired reads.
+
+```diff
+! EXERCISE: Which flag corresponds to unmapped reads?
+! EXERCISE: How many unmapped reads are present in this output?
+! EXERCISE: Why can long reads have supplementary alignments?
+```
+
+
 ### **7. Coverage**
 
 Coverage tells us how many reads support each position of the reference genome.
@@ -206,7 +349,7 @@ Use `samtools coverage`:
 
 ```bash
 user1@vm-corso-colonna:~/lr-working$ samtools coverage \
-  bam/DRR187567.KUN1163.minimap2.sorted.bam \
+  bam/DRR187567.KUN1163.sorted.bam \
   > coverage/DRR187567.coverage.txt
 ```
 
@@ -228,7 +371,7 @@ We can inspect the alignment directly in the terminal.
 
 ```bash
 user1@vm-corso-colonna:~/lr-working$ samtools tview \
-  bam/DRR187567.KUN1163.minimap2.sorted.bam \
+  bam/DRR187567.KUN1163.sorted.bam \
   ../data-longreads/reference/KUN1163_reference.fasta
 ```
 
@@ -238,7 +381,20 @@ user1@vm-corso-colonna:~/lr-working$ samtools tview \
 + Insertions and deletions are represented in the alignment display
 ```
 
+Basic navigation inside `samtools tview`:
+
 ```diff
++ Use the left and right arrow keys to move along the reference
++ Use the up and down arrow keys to move through stacked reads
++ Press g to go to a specific position
++ Type a position such as AP020324.1:100000 and press Enter
++ Press q to quit tview
+```
+
+```diff
+! EXERCISE: Open tview and move right until the genomic position changes
+! EXERCISE: Use g to jump to a position on the chromosome
+! EXERCISE: Use g to jump to a position on the plasmid
 ! EXERCISE: Move along the reference
 ! EXERCISE: Find a region with several mismatches or indels
 ! EXERCISE: Compare how this display feels with the short-read alignment lesson
@@ -272,4 +428,3 @@ lr-local-work$ scp user1@212.189.205.193:/home/user1/lr-working/coverage/* .
 ```diff
 ! EXERCISE: Before moving to variant calling, check that the sorted BAM and BAI files exist
 ```
-
