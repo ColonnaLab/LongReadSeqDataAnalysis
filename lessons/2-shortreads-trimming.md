@@ -66,6 +66,16 @@ total 962376
 -rw-rw-r-- 1 user1 user1    139890 Dec 18 22:19 SRR2584863_2.un.trimmed.fastq
 
 ```
+
+In paired-end mode, `Trimmomatic` writes four output files:
+
+- `SRR2584863_1.trimmed.fastq`: forward reads that passed trimming and still have their reverse mate
+- `SRR2584863_2.trimmed.fastq`: reverse reads that passed trimming and still have their forward mate
+- `SRR2584863_1.un.trimmed.fastq`: forward reads that passed trimming, but whose reverse mate was discarded
+- `SRR2584863_2.un.trimmed.fastq`: reverse reads that passed trimming, but whose forward mate was discarded
+
+For paired-end alignment we normally use the two `.trimmed.fastq` files because the read pairs are still synchronized. The `.un.trimmed.fastq` files contain orphan reads and can be kept for other analyses, but they are not used in the paired-end command shown here.
+
 Count lines and compare with Untrimmed 
 
 We have already trimmed all in trimmed_all 
