@@ -1,5 +1,5 @@
 [back to course home page ](../README.md)
-## 4. Long-read sequencing: molecule context
+## Long-read sequencing: molecule context
 
 Long-read technologies help recover information that short reads fragment away: structural variation, repeats, haplotypes, isoforms, and epigenetic marks.
 
