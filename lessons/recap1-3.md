@@ -282,7 +282,7 @@ In this exercise, we repeat the complete short-read workflow using the same orga
 Start in your analysis directory:
 
 ```bash
-cd ~/seq-analysis
+cd /data/user1/seq-analysis
 pwd
 ls
 ```
