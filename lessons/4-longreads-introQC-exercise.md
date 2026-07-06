@@ -15,7 +15,28 @@ The original publication produced the completed genome using both Oxford Nanopor
 
 Hikichi M, Nagao M, Murase K, Aikawa C, Nozawa T, Yoshida A, Kikuchi T, Nakagawa I. 2019. Complete Genome Sequences of Eight Methicillin-Resistant *Staphylococcus aureus* Strains Isolated from Patients in Japan. *Microbiology Resource Announcements* 8. https://doi.org/10.1128/mra.01212-19
 
-###  Downloading the sequencing data from the SRA using the SRA Toolkit
+##  Organizing the space on you computer(s)
+
+The most important part of your work is to **be organized**. You will generate many files and if you do not keep track of them you will mix and loose most of your job. 
+
+You will work both on the **remote server** and on your **local machine**, first think to do is to create folders in both places 
+
+```bash 
++ on your local machine
+
+mkdir lr-local-work 
+
++ on the remote server 
+user1@vm-corso-colonna:~$ mkdir lr-working
+user1@vm-corso-colonna:~$ cd  lr-working
+
+``` 
+
+**All the practical work on the remote machine will be done in the lr-working dir**
+
+
+
+###  (optional) Downloading the sequencing data from the SRA using the SRA Toolkit
 
 Install the NCBI SRA Toolkit, then create a project directory and download run **DRR187567**.
 
@@ -60,22 +81,15 @@ samtools faidx reference/KUN1163_reference.fasta
 
 The file `reference/KUN1163_reference.fasta` should be used for long-read alignment and coverage analysis.
 
-##  Organizing the space on you computer(s)
 
-The most important part of your work is to **be organized**. You will generate many files and if you do not keep track of them you will mix and loose most of your job. 
+## Link to the data
 
-You will work both on the **remote server** and on your **local machine**, first think to do is to create folders in both places 
+To save time and space we have already downloaded the data in /data/user1 . Create a symbolic link inyour folder to access it (remeber to keep user1): 
 
-```bash 
-+ on your local machine
+```bash
+user1@vm-corso-colonna:/data/user1/lr-working$ ln -s /home/data/data-longreads
+```
 
-mkdir lr-local-work 
-
-+ on the remote server 
-user1@vm-corso-colonna:~$ mkdir lr-working
-user1@vm-corso-colonna:~$ cd  lr-working
-
-``` 
 
 
 ## Quality Control with SeqKit and Nanoplot 
