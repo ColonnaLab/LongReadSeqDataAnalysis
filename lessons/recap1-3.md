@@ -310,6 +310,14 @@ fastqc genomic-lesson-data/untrimmed_fastq/SRR2584863_2.fastq.gz -o fastqc-res
 ls fastqc-res
 ```
 
+Open a new terminal on your local machine, make a local folder,  move into the folder, es an example 
+
+```bash
+
+
+
+```
+
 Transfer one HTML report to your laptop with `scp` and open it in a browser:
 
 ```bash
@@ -326,7 +334,6 @@ scp user1@212.189.205.193:/data/user1/seq-analysis/fastqc-res/SRR2584863_1_fastq
 
 ```bash
 mkdir -p trimmed
-cd trimmed
 ```
 
 ```bash
