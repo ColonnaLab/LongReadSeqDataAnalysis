@@ -313,7 +313,7 @@ ls fastqc-res
 Transfer one HTML report to your laptop with `scp` and open it in a browser:
 
 ```bash
-scp user1@212.189.205.193/data/user1/seq-analysis/fastqc-res/SRR2584863_1_fastqc.html .
+scp user1@212.189.205.193:/data/user1/seq-analysis/fastqc-res/SRR2584863_1_fastqc.html .
 ```
 
 ```diff
