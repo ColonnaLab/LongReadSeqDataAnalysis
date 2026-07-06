@@ -332,8 +332,8 @@ cd trimmed
 ```bash
 java -jar /data/Trimmomatic-0.39/trimmomatic-0.39.jar \
   PE -threads 4 \
-  ../genomic-lesson-data/untrimmed_fastq/SRR2584863_1.fastq.gz \
-  ../genomic-lesson-data/untrimmed_fastq/SRR2584863_2.fastq.gz \
+  genomic-lesson-data/untrimmed_fastq/SRR2584863_1.fastq.gz \
+  genomic-lesson-data/untrimmed_fastq/SRR2584863_2.fastq.gz \
   trimmed/SRR2584863_1.trimmed.fastq trimmed/SRR2584863_1.un.trimmed.fastq \
   trimmed/SRR2584863_2.trimmed.fastq trimmed/SRR2584863_2.un.trimmed.fastq \
   ILLUMINACLIP:/data/Trimmomatic-0.39/adapters/TruSeq3-PE.fa:2:30:10 \
