@@ -191,9 +191,9 @@ user1@vm-corso-colonna:~$ mkdir -p qc_nanoplot
 
 ```bash
 user1@vm-corso-colonna:~$ NanoPlot \
-  --fastq ../data-longreads/fastq/DRR187567.fastq.gz \
+  --fastq  data-longreads/fastq/DRR187567.fastq.gz \
   --outdir qc_nanoplot \
-  --prefix DRR187567_ \
+  --prefix DRR187567_ 
 
 ```
 
