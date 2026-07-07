@@ -98,11 +98,11 @@ user1@vm-corso-colonna:/data/user1/lr-working$ ln -s /data/user1/data-longreads 
 this is where the data lives 
 
 ```bash 
-user1@vm-corso-colonna:~$ ls ../data-longreads
+user1@vm-corso-colonna:~$ ls data-longreads
 DRR187567  fastq  reference
-user1@vm-corso-colonna:~$ ls ../data-longreads/fastq/
+user1@vm-corso-colonna:~$ ls data-longreads/fastq/
 DRR187567.fastq.gz
-user1@vm-corso-colonna:~$ ls ../data-longreads/reference/
+user1@vm-corso-colonna:~$ ls data-longreads/reference/
 KUN1163_reference.fasta  KUN1163_reference.fasta.fai
 user1@vm-corso-colonna:~$ 
 ```
