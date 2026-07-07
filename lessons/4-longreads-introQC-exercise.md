@@ -87,7 +87,7 @@ The file `reference/KUN1163_reference.fasta` should be used for long-read alignm
 To save time and space we have already downloaded the data in /data/user1 . Create a symbolic link inyour folder to access it (remeber to keep user1): 
 
 ```bash
-user1@vm-corso-colonna:/data/user1/lr-working$ ln -s /home/data/data-longreads
+user1@vm-corso-colonna:/data/user1/lr-working$ ln -s /data/user1/data-longreads
 ```
 
 
