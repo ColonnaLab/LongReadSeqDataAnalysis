@@ -25,6 +25,7 @@ You will work both on the **remote server** and on your **local machine**, first
 + on your local machine
 
 mkdir lr-local-work 
+cd lr-local-work
 
 + on the remote server 
 user1@vm-corso-colonna:~$ mkdir lr-working
