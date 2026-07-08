@@ -32,7 +32,6 @@ This file lists the main software used in the lessons, with links to the officia
 | SRA Toolkit | Downloading SRA data with `prefetch` and `fasterq-dump` | https://github.com/ncbi/sra-tools |
 | seqkit | FASTA/FASTQ summary statistics, read counts, lengths, N50 | https://github.com/shenwei356/seqkit |
 | NanoPlot | Oxford Nanopore read QC plots and HTML reports | https://github.com/wdecoster/NanoPlot |
-| pycoQC | Oxford Nanopore run-level QC from sequencing summary files | https://github.com/a-slide/pycoQC |
 | minimap2 | Long-read alignment to a reference genome |https://lh3.github.io/minimap2/minimap2.html  https://github.com/lh3/minimap2 |
 | SAMtools | BAM inspection, indexing, coverage and alignment summaries | https://github.com/samtools/samtools |
 | BCFtools | VCF/BCF filtering and manipulation | https://github.com/samtools/bcftools |
