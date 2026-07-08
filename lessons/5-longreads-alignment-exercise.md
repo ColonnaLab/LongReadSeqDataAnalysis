@@ -249,7 +249,7 @@ Extract the unmapped reads to FASTQ for quality control or taxonomic classificat
 ```bash
 user1@vm-corso-colonna:/data/user1/lr-working$ samtools fastq \
   -f 4 \
-  bam/DRR187567.KUN1163.minimap2.sorted.bam \
+  bam/DRR187567.KUN1163.sorted.bam \
   > alignment/DRR187567.unmapped.fastq
 ```
 
@@ -419,8 +419,8 @@ lr-local-work$ scp user1@212.189.205.193:/home/user1/lr-working/coverage/* .
 ### **10. Practical Checkpoint**
 
 - Files that should now be present:
-  - `bam/DRR187567.KUN1163.minimap2.sorted.bam`
-  - `bam/DRR187567.KUN1163.minimap2.sorted.bam.bai`
+  - `bam/DRR187567.KUN1163.sorted.bam`
+  - `bam/DRR187567.KUN1163.sorted.bam.bai`
   - `alignment/DRR187567.flagstat.txt`
   - `alignment/DRR187567.idxstats.txt`
   - `coverage/DRR187567.coverage.txt`
