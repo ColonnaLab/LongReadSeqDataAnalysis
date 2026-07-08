@@ -144,7 +144,7 @@ user1@vm-corso-colonna:~/lr-working$ ls -lh bam/
 
 ### **5. Faster Alternative: Pipe minimap2 into samtools**
 
-**(Do not usetoo much memory for the course computer !!!)**
+**(Do not use too much memory for the course computer !!!)**
 
 
 The previous steps are useful for learning, but they create a large intermediate SAM file. In real workflows, it is common to pipe `minimap2` directly into `samtools sort`.
