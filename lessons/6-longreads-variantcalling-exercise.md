@@ -11,7 +11,7 @@ The input files are:
 - BAM index: `bam/DRR187567.KUN1163.sorted.bam.bai`
 
 ```diff
-+ We will work inside ~/lr-working
++ We will work inside /data/user1/lr-working
 + We will use the BAM file produced in lesson 5
 + We will create VCF files for variant calls
 + We will inspect and filter the variant calls
@@ -22,15 +22,15 @@ The input files are:
 Move to the long reads working folder and check that the alignment files exist:
 
 ```bash
-user1@vm-corso-colonna:~$ cd ~/lr-working
-user1@vm-corso-colonna:~/lr-working$ ls -lh bam/
-user1@vm-corso-colonna:~/lr-working$ ls -lh ../data-longreads/reference/
+user1@vm-corso-colonna:~$ cd /data/user1/lr-working
+user1@vm-corso-colonna:/data/user1/lr-working$ ls -lh bam/
+user1@vm-corso-colonna:/data/user1/lr-working$ ls -lh ../data-longreads/reference/
 ```
 
 Create folders for variant calling results:
 
 ```bash
-user1@vm-corso-colonna:~/lr-working$ mkdir -p variants variants/logs
+user1@vm-corso-colonna:/data/user1/lr-working$ mkdir -p variants variants/logs
 ```
 
 ```diff
@@ -45,20 +45,20 @@ Variant calling tools need indexed input files.
 If the BAM index is missing, create it:
 
 ```bash
-user1@vm-corso-colonna:~/lr-working$ samtools index bam/DRR187567.KUN1163.sorted.bam
+user1@vm-corso-colonna:/data/user1/lr-working$ samtools index bam/DRR187567.KUN1163.sorted.bam
 ```
 
 If the reference FASTA index is missing, create it:
 
 ```bash
-user1@vm-corso-colonna:~/lr-working$ samtools faidx ../data-longreads/reference/KUN1163_reference.fasta
+user1@vm-corso-colonna:/data/user1/lr-working$ samtools faidx ../data-longreads/reference/KUN1163_reference.fasta
 ```
 
 Check the indexed files:
 
 ```bash
-user1@vm-corso-colonna:~/lr-working$ ls -lh bam/DRR187567.KUN1163.sorted.bam*
-user1@vm-corso-colonna:~/lr-working$ ls -lh ../data-longreads/reference/KUN1163_reference.fasta*
+user1@vm-corso-colonna:/data/user1/lr-working$ ls -lh bam/DRR187567.KUN1163.sorted.bam*
+user1@vm-corso-colonna:/data/user1/lr-working$ ls -lh ../data-longreads/reference/KUN1163_reference.fasta*
 ```
 
 ### **3. Inspect Coverage Before Variant Calling**
@@ -66,13 +66,13 @@ user1@vm-corso-colonna:~/lr-working$ ls -lh ../data-longreads/reference/KUN1163_
 Coverage affects variant calling reliability. Positions with very low coverage are more difficult to call confidently.
 
 ```bash
-user1@vm-corso-colonna:~/lr-working$ samtools coverage \
+user1@vm-corso-colonna:/data/user1/lr-working$ samtools coverage \
   bam/DRR187567.KUN1163.sorted.bam \
   > variants/DRR187567.coverage.before_variant_calling.txt
 ```
 
 ```bash
-user1@vm-corso-colonna:~/lr-working$ cat variants/DRR187567.coverage.before_variant_calling.txt
+user1@vm-corso-colonna:/data/user1/lr-working$ cat variants/DRR187567.coverage.before_variant_calling.txt
 ```
 
 ```diff
@@ -87,13 +87,13 @@ user1@vm-corso-colonna:~/lr-working$ cat variants/DRR187567.coverage.before_vari
 Check the help page:
 
 ```bash
-user1@vm-corso-colonna:~/lr-working$ freebayes -h | less
+user1@vm-corso-colonna:/data/user1/lr-working$ freebayes -h | less
 ```
 
 Run variant calling:
 
 ```bash
-user1@vm-corso-colonna:~/lr-working$ freebayes \
+user1@vm-corso-colonna:/data/user1/lr-working$ freebayes \
   -f ../data-longreads/reference/KUN1163_reference.fasta \
   bam/DRR187567.KUN1163.sorted.bam \
   > variants/DRR187567.freebayes.vcf
@@ -102,7 +102,7 @@ user1@vm-corso-colonna:~/lr-working$ freebayes \
 Check the output:
 
 ```bash
-user1@vm-corso-colonna:~/lr-working$ ls -lh variants/DRR187567.freebayes.vcf
+user1@vm-corso-colonna:/data/user1/lr-working$ ls -lh variants/DRR187567.freebayes.vcf
 ```
 
 ```diff
@@ -117,25 +117,25 @@ user1@vm-corso-colonna:~/lr-working$ ls -lh variants/DRR187567.freebayes.vcf
 View the header:
 
 ```bash
-user1@vm-corso-colonna:~/lr-working$ grep "^##" variants/DRR187567.freebayes.vcf | less
+user1@vm-corso-colonna:/data/user1/lr-working$ grep "^##" variants/DRR187567.freebayes.vcf | less
 ```
 
 View the VCF column names:
 
 ```bash
-user1@vm-corso-colonna:~/lr-working$ grep "^#CHROM" variants/DRR187567.freebayes.vcf
+user1@vm-corso-colonna:/data/user1/lr-working$ grep "^#CHROM" variants/DRR187567.freebayes.vcf
 ```
 
 View the first variant records:
 
 ```bash
-user1@vm-corso-colonna:~/lr-working$ grep -v "^#" variants/DRR187567.freebayes.vcf | head
+user1@vm-corso-colonna:/data/user1/lr-working$ grep -v "^#" variants/DRR187567.freebayes.vcf | head
 ```
 
 Count the number of variant records:
 
 ```bash
-user1@vm-corso-colonna:~/lr-working$ grep -vc "^#" variants/DRR187567.freebayes.vcf
+user1@vm-corso-colonna:/data/user1/lr-working$ grep -vc "^#" variants/DRR187567.freebayes.vcf
 ```
 
 ```diff
@@ -151,7 +151,7 @@ Many tools work better with compressed and indexed VCF files.
 Compress the VCF:
 
 ```bash
-user1@vm-corso-colonna:~/lr-working$ bgzip \
+user1@vm-corso-colonna:/data/user1/lr-working$ bgzip \
   -c variants/DRR187567.freebayes.vcf \
   > variants/DRR187567.freebayes.vcf.gz
 ```
@@ -159,7 +159,7 @@ user1@vm-corso-colonna:~/lr-working$ bgzip \
 Index the compressed VCF:
 
 ```bash
-user1@vm-corso-colonna:~/lr-working$ tabix \
+user1@vm-corso-colonna:/data/user1/lr-working$ tabix \
   -p vcf \
   variants/DRR187567.freebayes.vcf.gz
 ```
@@ -167,7 +167,7 @@ user1@vm-corso-colonna:~/lr-working$ tabix \
 Check the output:
 
 ```bash
-user1@vm-corso-colonna:~/lr-working$ ls -lh variants/DRR187567.freebayes.vcf.gz*
+user1@vm-corso-colonna:/data/user1/lr-working$ ls -lh variants/DRR187567.freebayes.vcf.gz*
 ```
 
 ### **7. Summarize Variants with bcftools**
@@ -175,7 +175,7 @@ user1@vm-corso-colonna:~/lr-working$ ls -lh variants/DRR187567.freebayes.vcf.gz*
 Use `bcftools stats` to summarize the VCF:
 
 ```bash
-user1@vm-corso-colonna:~/lr-working$ bcftools stats \
+user1@vm-corso-colonna:/data/user1/lr-working$ bcftools stats \
   variants/DRR187567.freebayes.vcf.gz \
   > variants/DRR187567.freebayes.stats.txt
 ```
@@ -183,13 +183,13 @@ user1@vm-corso-colonna:~/lr-working$ bcftools stats \
 Inspect the summary:
 
 ```bash
-user1@vm-corso-colonna:~/lr-working$ less variants/DRR187567.freebayes.stats.txt
+user1@vm-corso-colonna:/data/user1/lr-working$ less variants/DRR187567.freebayes.stats.txt
 ```
 
 Count variants by reference sequence:
 
 ```bash
-user1@vm-corso-colonna:~/lr-working$ bcftools query \
+user1@vm-corso-colonna:/data/user1/lr-working$ bcftools query \
   -f '%CHROM\n' \
   variants/DRR187567.freebayes.vcf.gz \
   | sort \
@@ -208,7 +208,7 @@ Filtering removes low-confidence calls or creates a smaller set of variants for 
 Filter by quality:
 
 ```bash
-user1@vm-corso-colonna:~/lr-working$ bcftools filter \
+user1@vm-corso-colonna:/data/user1/lr-working$ bcftools filter \
   -i 'QUAL>20' \
   variants/DRR187567.freebayes.vcf.gz \
   -Oz \
@@ -218,7 +218,7 @@ user1@vm-corso-colonna:~/lr-working$ bcftools filter \
 Index the filtered VCF:
 
 ```bash
-user1@vm-corso-colonna:~/lr-working$ tabix \
+user1@vm-corso-colonna:/data/user1/lr-working$ tabix \
   -p vcf \
   variants/DRR187567.freebayes.QUAL20.vcf.gz
 ```
@@ -226,14 +226,14 @@ user1@vm-corso-colonna:~/lr-working$ tabix \
 Count variants before and after filtering:
 
 ```bash
-user1@vm-corso-colonna:~/lr-working$ bcftools view \
+user1@vm-corso-colonna:/data/user1/lr-working$ bcftools view \
   -H \
   variants/DRR187567.freebayes.vcf.gz \
   | wc -l
 ```
 
 ```bash
-user1@vm-corso-colonna:~/lr-working$ bcftools view \
+user1@vm-corso-colonna:/data/user1/lr-working$ bcftools view \
   -H \
   variants/DRR187567.freebayes.QUAL20.vcf.gz \
   | wc -l
@@ -252,7 +252,7 @@ Use `bcftools view` to inspect variants in a specific region.
 Example for the chromosome:
 
 ```bash
-user1@vm-corso-colonna:~/lr-working$ bcftools view \
+user1@vm-corso-colonna:/data/user1/lr-working$ bcftools view \
   -r AP020324.1:1-100000 \
   variants/DRR187567.freebayes.QUAL20.vcf.gz \
   | less
@@ -261,7 +261,7 @@ user1@vm-corso-colonna:~/lr-working$ bcftools view \
 Example for the plasmid:
 
 ```bash
-user1@vm-corso-colonna:~/lr-working$ bcftools view \
+user1@vm-corso-colonna:/data/user1/lr-working$ bcftools view \
   -r AP020325.1:1-30220 \
   variants/DRR187567.freebayes.QUAL20.vcf.gz \
   | less

@@ -31,11 +31,7 @@ The dataset is the same used in lesson 4:
   - insertions and deletions
   - soft-clipped or split parts of the read
 
-```diff
-+ Reference:   ...ATCGATCGATCGATCG...
-+ Read:           ATCGATCGTTTGATCG
-+ Alignment:      matches + mismatches + possible insertions/deletions
-```
+
 
 ### **2. Why Long Reads Need Specific Aligners**
 

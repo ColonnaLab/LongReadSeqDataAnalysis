@@ -2,6 +2,7 @@
 Course material for a Practical Course at the [University of Bari](https://www.uniba.it/en/) 
 
 [Software used in this course](SOFTWARE.md)
+[File formats used in this course](FILE_FORMATS.md)
 
 
 ### 2025/12/16-20 -  Introductory Module 

@@ -136,15 +136,12 @@ Read dept:  2 2 3 3 4 4 3 3 2 2 1 1
 Average read dept: 2.5 
 ```
 
-::: {.callout-warning appearance="simple" }
 ### Expected average read depth at sequencing
 For a genome of length `G`, sequenced with `N` reads of average length `L`:
 ```text
 expected average read depth = (N x L) / G
 ```
 For example, `1,000,000 reads x 150 bp / 5,000,000 bp = 30x` average depth. However, 30x average depth does not guarantee 30 reads at every base. Repeats, GC bias, mapping ambiguity, and random sampling create uneven depth.
-:::
-
 
 
 #### Haplotype coverage
