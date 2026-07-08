@@ -108,6 +108,78 @@ Longer reads preserve more context across:
 
 *Sequence technologies differ not only in accuracy and throughput but also in the amount of continuous molecule context retained in each read. Short reads provide deep local evidence, HiFi reads combine long-range context with high accuracy, and nanopore sequencing can extend into ultra-long molecule ranges. The horizontal scale is approximate and logarithmic; actual read-length distributions depend on platform, library preparation, DNA quality, size selection, chemistry, and run settings.*
 
+### Quality score   
+A Phred-scaled estimate of the probability that a base call is incorrect. Most sequencing workflows use Phred-scaled quality values:
+
+```text
+Q = -10 log10(P_error)
+```
+
+- Q20 ≈ 1 error per 100 bases.
+- Q30 ≈ 1 error per 1,000 bases.
+- Q40 ≈ 1 error per 10,000 bases.
+
+### Coverage
+
+Coverage is a general word for how much sequence evidence supports a base, region, molecule, haplotype, k-mer, or path through a genome graph. The exact meaning depends on what is being counted. A dataset described as "30x" may have 30x average read depth, but this does not mean that every base, haplotype, k-mer, or graph path is observed 30 times.
+
+#### Read depth (sequence coverage)
+
+Read depth is the number of reads that overlap a base or region after the reads have been aligned to a reference sequence or graph.
+
+```text
+Reference:  A C G T A C G T A C G T
+Read 1:     A C G T A C              Central bases are covered by three reads, 
+Read 2:         G T A C G T          while coverage drops at the ends of reads 
+Read 3:             A C G T A C      
+Read dept:  2 2 3 3 4 4 3 3 2 2 1 1
+Average read dept: 2.5 
+```
+
+::: {.callout-warning appearance="simple" }
+### Expected average read depth at sequencing
+For a genome of length `G`, sequenced with `N` reads of average length `L`:
+```text
+expected average read depth = (N x L) / G
+```
+For example, `1,000,000 reads x 150 bp / 5,000,000 bp = 30x` average depth. However, 30x average depth does not guarantee 30 reads at every base. Repeats, GC bias, mapping ambiguity, and random sampling create uneven depth.
+:::
+
+
+
+#### Haplotype coverage
+
+Haplotype coverage is the amount of evidence assigned to each chromosome copy or haplotype. In a diploid sample, total read depth is divided between the two haplotypes, although the division is rarely perfectly even.
+
+```text
+Reference position:              *              Ten reads overlap this
+                                 |              heterozygous position.
+Haplotype 1 reads:  -----A-------|   6 reads    Six carry A, four carry G,
+                    -----A-------|              total read depth is 10x.
+                    -----A-------|              
+                    -----A-------|              
+                    -----A-------|              
+                    -----A-------|             When alleles are phased,    
+                                               haplotype depths are 6x and 4x.
+Haplotype 2 reads:  -----G-------|   4 reads
+                    -----G-------|
+                    -----G-------|
+                    -----G-------|
+
+Total depth:                       10x
+Haplotype 1 depth:                  6x
+Haplotype 2 depth:                  4x
+```
+
+Haplotype coverage matters for phasing and diploid assembly. Long reads may connect several heterozygous variants and show that they belong to the same chromosome copy:
+
+```text
+Haplotype 1:  A -------- C -------- G
+Haplotype 2:  G -------- T -------- A
+
+Long read:    A -------- C -------- G   -> supports haplotype 1
+```
+
 
 ## Long reads technologies and quality control
 
