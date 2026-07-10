@@ -12,7 +12,7 @@ The input files are:
 
 ```diff
 + We will work inside ~/lr-working
-+ We will keep raw data in ../data-longreads
++ We will keep raw data in data-longreads
 + We will write alignment results inside the working folder
 ```
 
@@ -372,7 +372,7 @@ We can inspect the alignment directly in the terminal.
 ```bash
 user1@vm-corso-colonna:/data/user1/lr-working$ samtools tview \
   bam/DRR187567.KUN1163.sorted.bam \
-  ../data-longreads/reference/KUN1163_reference.fasta
+  data-longreads/reference/KUN1163_reference.fasta
 ```
 
 ```diff
@@ -400,31 +400,108 @@ Basic navigation inside `samtools tview`:
 ! EXERCISE: Compare how this display feels with the short-read alignment lesson
 ```
 
-### **9. Copy Summary Results to the Local Machine**
+### **9. Visualize Alignments with IGV**
 
-If you want to inspect the output files locally, copy the text summaries from the server.
+`samtools tview` is useful in the terminal, but graphical inspection is easier in [IGV](https://igv.org/doc/desktop/), the Integrative Genomics Viewer.
+
+IGV runs on your local machine. To inspect the alignment locally, copy these files from the server:
+
+- reference FASTA: `data-longreads/reference/KUN1163_reference.fasta`
+- reference FASTA index: `data-longreads/reference/KUN1163_reference.fasta.fai`
+- sorted BAM: `bam/DRR187567.KUN1163.sorted.bam`
+- BAM index: `bam/DRR187567.KUN1163.sorted.bam.bai`
+
+```diff
++ IGV needs the reference FASTA as the coordinate system
++ IGV needs the BAM file to display aligned reads
++ IGV needs the BAM index file to jump quickly to genomic regions
++ Keep the .bam and .bam.bai files in the same local folder
+```
 
 Run these commands from the `lr-local-work` folder on your local machine:
 
 ```bash
-lr-local-work$ scp user1@212.189.205.193:/home/user1/lr-working/alignment/* .
-lr-local-work$ scp user1@212.189.205.193:/home/user1/lr-working/coverage/* .
+lr-local-work$ mkdir -p igv
+lr-local-work$ scp user1@212.189.205.193:/data/user1/lr-working/data-longreads/reference/KUN1163_reference.fasta igv/
+lr-local-work$ scp user1@212.189.205.193:/data/user1/lr-working/data-longreads/reference/KUN1163_reference.fasta.fai igv/
+lr-local-work$ scp user1@212.189.205.193:/data/user1/lr-working/bam/DRR187567.KUN1163.sorted.bam igv/
+lr-local-work$ scp user1@212.189.205.193:/data/user1/lr-working/bam/DRR187567.KUN1163.sorted.bam.bai igv/
 ```
 
-```diff
-! EXERCISE: Save the flagstat, idxstats, and coverage summaries
-! These files will be useful for the variant calling lesson
+Check that the local IGV folder contains all four files:
+
+```bash
+lr-local-work$ ls -lh igv/
 ```
 
-### **10. Practical Checkpoint**
+Open IGV on your local machine.
 
-- Files that should now be present:
-  - `bam/DRR187567.KUN1163.sorted.bam`
-  - `bam/DRR187567.KUN1163.sorted.bam.bai`
-  - `alignment/DRR187567.flagstat.txt`
-  - `alignment/DRR187567.idxstats.txt`
-  - `coverage/DRR187567.coverage.txt`
+Load the reference genome:
 
 ```diff
-! EXERCISE: Before moving to variant calling, check that the sorted BAM and BAI files exist
++ In IGV, select Genomes > Load Genome from File
++ Select igv/KUN1163_reference.fasta
+```
+
+Load the alignment track:
+
+```diff
++ Select File > Load from File
++ Select igv/DRR187567.KUN1163.sorted.bam
++ IGV should automatically find igv/DRR187567.KUN1163.sorted.bam.bai
+```
+
+Navigate to the chromosome:
+
+```diff
++ Type AP020324.1:1-100000 in the search box and press Enter
++ Zoom in until individual reads are visible
++ Drag left or right to move along the genome
+```
+
+Navigate to the plasmid:
+
+```diff
++ Type AP020325.1:1-30220 in the search box and press Enter
++ Inspect whether the read depth is similar to the chromosome
+```
+
+What to look for:
+
+- the coverage track above the reads
+- individual long-read alignments
+- mismatches shown as colored bases
+- insertions and deletions in the read alignments
+- soft-clipped or split reads
+- regions with unusually low or high coverage
+
+```diff
+! EXERCISE: Load the KUN1163 reference genome in IGV
+! EXERCISE: Load the sorted BAM alignment file
+! EXERCISE: Jump to AP020324.1:1-100000
+! EXERCISE: Jump to AP020325.1:1-30220
+! EXERCISE: Find one region with visible mismatches or indels
+! EXERCISE: Compare the graphical IGV view with samtools tview
+```
+
+Optional IGV exercise 1: compare chromosome and plasmid coverage visually.
+
+```diff
+! OPTIONAL EXERCISE: In IGV, open AP020324.1:1-100000
+! Look at the coverage track above the reads
+! Is coverage mostly even, or are there visible peaks and dips?
+! Now open AP020325.1:1-30220
+! Compare plasmid coverage with chromosome coverage
+! Does the visual impression match the samtools coverage output?
+```
+
+Optional IGV exercise 2: inspect evidence for a mismatch or indel.
+
+```diff
+! OPTIONAL EXERCISE: In IGV, zoom in until individual bases are visible
+! Find a position where several reads show a colored mismatch or an indel
+! Click on one read covering that position
+! Inspect the read details popup
+! Check whether multiple reads support the same difference
+! Would you trust this as a possible variant? Why or why not?
 ```
