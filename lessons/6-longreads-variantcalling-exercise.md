@@ -240,20 +240,32 @@ For ONT R10.4 data, DeepVariant uses:
 
 DeepVariant's released germline models are mainly trained for human, diploid variant calling. The MRSA reads in this lesson are bacterial and may also have been produced with an older ONT chemistry. Treat the DeepVariant result as a teaching comparison rather than a validated production call set.
 
-Run DeepVariant:
+#### Activate the DeepVariant conda environment
+
+Like Clair3, DeepVariant must be run from the conda environment where it is installed.
 
 ```bash
-user1@vm-corso-colonna:/data/user1/lr-working$ docker run \
-  -v /data/user1/lr-working:/work \
-  google/deepvariant:1.10.0 \
-  /opt/deepvariant/bin/run_deepvariant \
-    --model_type=ONT_R104 \
-    --ref=/work/data-longreads/reference/KUN1163_reference.fasta \
-    --reads=/work/bam/DRR187567.KUN1163.sorted.bam \
-    --output_vcf=/work/variants/deepvariant/DRR187567.deepvariant.vcf.gz \
-    --output_gvcf=/work/variants/deepvariant/DRR187567.deepvariant.g.vcf.gz \
-    --num_shards=4 \
-    --haploid_contigs=AP020324.1,AP020325.1
+user1@vm-corso-colonna:/data/user1/lr-working$ source $(conda info --base)/etc/profile.d/conda.sh
+user1@vm-corso-colonna:/data/user1/lr-working$ conda activate deepvariant
+user1@vm-corso-colonna:/data/user1/lr-working$ echo $CONDA_PREFIX
+user1@vm-corso-colonna:/data/user1/lr-working$ ls $CONDA_PREFIX/bin/run_deepvariant*
+```
+
+The last command checks which DeepVariant run scripts are installed in the active environment.
+
+#### Run DeepVariant
+
+Run DeepVariant with the Python wrapper installed in the conda environment:
+
+```bash
+user1@vm-corso-colonna:/data/user1/lr-working$ python $CONDA_PREFIX/bin/run_deepvariant.py \
+  --model_type=ONT_R104 \
+  --ref=data-longreads/reference/KUN1163_reference.fasta \
+  --reads=bam/DRR187567.KUN1163.sorted.bam \
+  --output_vcf=variants/deepvariant/DRR187567.deepvariant.vcf.gz \
+  --output_gvcf=variants/deepvariant/DRR187567.deepvariant.g.vcf.gz \
+  --num_shards=4 \
+  --haploid_contigs=AP020324.1,AP020325.1
 ```
 
 Check the DeepVariant output:
