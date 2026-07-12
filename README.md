@@ -21,6 +21,14 @@ Course material for a Practical Course at the [University of Bari](https://www.u
 | **[Day 7 - Long-read variant calling](lessons/6-longreads-variantcalling.md)** | 2026/07/10 | Long-read variant calling with Clair3 and DeepVariant<br>[Exercise](lessons/6-longreads-variantcalling-exercise.md) | Review Day 6 lesson |
 | **Extra** | - | [R for reproducible data analysis](https://swcarpentry.github.io/r-novice-gapminder/) | Install [R](https://www.r-project.org/) (latest version)<br>Install [RStudio Desktop](https://www.rstudio.com/products/rstudio/download/#download) |
 
+### Advanced / Hackathon Module
+*Small-group project sessions for advanced students. These sessions are less prescriptive than the beginner lessons and focus on decisions, evaluation, and interpretation.*
+
+| Session and link | Date | Goal | Preparation Required |
+|:---:|:----:|------|---------------------|
+| **[7 - Advanced ONT assembly](lessons/7-advanced-longread-assembly.md)** | TBD | Assemble the MRSA KUN1163 genome from ONT reads and evaluate chromosome/plasmid recovery<br>[Hackathon brief](lessons/7-advanced-longread-assembly-hackathon.md) | Comfortable with lessons 4-6 |
+| **[8 - Advanced PacBio HiFi assembly](lessons/8-advanced-pacbio-hifi-assembly.md)** | TBD | Assemble *E. coli* K-12 from PacBio HiFi reads and compare to reference `NC_000913.3`<br>[Hackathon brief](lessons/8-advanced-pacbio-hifi-assembly-hackathon.md) | Comfortable with lesson 7 |
+
 #### Acknowledgments
 This course material includes content adapted from [Software Carpentry](https://software-carpentry.org/) 
 lessons, which are made available under the [Creative Commons Attribution 

@@ -1,0 +1,116 @@
+Software for advanced assembly lessons 7 and 8
+================================================
+
+This file lists the software needed for:
+
+- Lesson 7: Advanced ONT assembly
+- Lesson 8: Advanced PacBio HiFi assembly
+
+
+Server-side tools
+-----------------
+
+1. seqkit
+   Used for: FASTQ/FASTA statistics, N50, read subsampling
+   Website: https://bioinf.shenwei.me/seqkit/
+   GitHub: https://github.com/shenwei356/seqkit
+   Bioconda: https://bioconda.github.io/recipes/seqkit/README.html
+
+2. Flye
+   Used for: ONT assembly; optional PacBio HiFi comparison
+   GitHub: https://github.com/mikolmogorov/Flye
+   Manual: https://github.com/mikolmogorov/Flye/blob/flye/docs/USAGE.md
+   Bioconda: https://bioconda.github.io/recipes/flye/README.html
+
+3. hifiasm
+   Used for: PacBio HiFi assembly
+   GitHub: https://github.com/chhylp123/hifiasm
+   Documentation: https://hifiasm.readthedocs.io/
+   Bioconda: https://bioconda.github.io/recipes/hifiasm/README.html
+
+4. minimap2
+   Used for: assembly-to-reference alignment
+   GitHub: https://github.com/lh3/minimap2
+   Manual: https://lh3.github.io/minimap2/minimap2.html
+   Bioconda: https://bioconda.github.io/recipes/minimap2/README.html
+
+5. samtools
+   Used for: SAM/BAM sorting, indexing, and coverage summaries
+   GitHub: https://github.com/samtools/samtools
+   Manual: https://www.htslib.org/doc/samtools.html
+   Bioconda: https://bioconda.github.io/recipes/samtools/README.html
+
+6. QUAST / quast.py
+   Used for: assembly quality and reference comparison
+   GitHub: https://github.com/ablab/quast
+   Website: https://quast.sourceforge.net/
+   Bioconda: https://bioconda.github.io/recipes/quast/README.html
+
+7. Bandage
+   Used for: optional assembly graph visualization
+   GitHub: https://github.com/rrwick/Bandage
+   Website: https://rrwick.github.io/Bandage/
+   Bioconda: https://bioconda.github.io/recipes/bandage/README.html
+
+8. Raven
+   Used for: optional alternative ONT assembler
+   GitHub: https://github.com/lbcb-sci/raven
+   Bioconda: https://bioconda.github.io/recipes/raven-assembler/README.html
+
+9. miniasm
+   Used for: optional very fast long-read assembler
+   GitHub: https://github.com/lh3/miniasm
+   Manual: https://lh3.github.io/miniasm/miniasm.html
+   Bioconda: https://bioconda.github.io/recipes/miniasm/README.html
+
+10. Canu / HiCanu
+    Used for: optional PacBio HiFi assembler
+    GitHub: https://github.com/marbl/canu
+    Documentation: https://canu.readthedocs.io/
+    Bioconda: https://bioconda.github.io/recipes/canu/README.html
+
+11. GNU awk / gawk
+    Used for: converting hifiasm GFA contigs to FASTA
+    Website: https://www.gnu.org/software/gawk/
+    Note: awk is usually already installed on Linux systems.
+
+
+Local-machine tool
+------------------
+
+12. IGV
+    Used for: visual inspection of assembly-reference alignments
+    Documentation: https://igv.org/doc/desktop/
+    Download: https://software.broadinstitute.org/software/igv/download
+    Note: IGV is usually installed on students' local machines, not on the server.
+
+
+Suggested conda/mamba installation
+----------------------------------
+
+Recommended server-side conda environment:
+
+    mamba create -n assembly-hackathon \
+      -c conda-forge -c bioconda \
+      seqkit flye hifiasm minimap2 samtools quast bandage raven-assembler miniasm canu
+
+If mamba is not available, use conda:
+
+    conda create -n assembly-hackathon \
+      -c conda-forge -c bioconda \
+      seqkit flye hifiasm minimap2 samtools quast bandage raven-assembler miniasm canu
+
+
+Data locations expected by the lessons
+--------------------------------------
+
+Lesson 7 ONT assembly:
+
+    /data/user1/lr-working/data-longreads/fastq/DRR187567.fastq.gz
+    /data/user1/lr-working/data-longreads/reference/KUN1163_reference.fasta
+
+Lesson 8 PacBio HiFi assembly:
+
+    /data/user1/data-pacbio/SRR10971019.fastq.gz
+    /data/user1/data-pacbio/NC_000913.3.fasta
+
