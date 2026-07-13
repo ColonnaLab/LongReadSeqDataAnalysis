@@ -43,7 +43,7 @@ This file lists the main software used in the lessons, with links to the officia
 | Flye | Long-read genome assembly from ONT and PacBio reads | https://github.com/mikolmogorov/Flye |
 | Raven | Fast long-read genome assembly, useful for comparing assembly results | https://github.com/lbcb-sci/raven |
 | miniasm | Fast overlap-based long-read assembly; usually requires polishing | https://github.com/lh3/miniasm |
-| hifiasm | PacBio HiFi assembly and haplotype-resolved assembly workflows | https://github.com/chhylp123/hifiasm |
+| hifiasm | PacBio HiFi assembly and haplotype-resolved assembly workflows | https://github.com/chhylp123/hifiasm  https://hifiasm.readthedocs.io/en/latest/index.html|
 | Canu / HiCanu | Long-read assembly, including HiFi-aware assembly modes | https://github.com/marbl/canu |
 | QUAST | Assembly quality assessment and reference-based assembly comparison | https://github.com/ablab/quast |
 | Bandage | Assembly graph visualization for GFA graph files | https://github.com/rrwick/Bandage |
