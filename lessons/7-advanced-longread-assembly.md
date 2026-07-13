@@ -56,7 +56,78 @@ Short reads often break assemblies at repeats because the reads are too short to
 ! DISCUSSION: Why can low-quality long reads still create assembly errors?
 ```
 
-### **3. Assembly Tools**
+### **3. Haploid, Diploid, Collapsed, and Phased Assemblies**
+
+The KUN1163 dataset in this session is bacterial, so it is treated as a **haploid** genome: each genomic region is expected to be represented once, except for repeats, plasmids, duplicated genes, or contamination.
+
+Many animal and plant genomes are **diploid**. A diploid individual carries two copies of each chromosome, one inherited from each parent. These two chromosome copies are called **haplotypes**. The haplotypes are usually similar, but they can differ by:
+
+- single-nucleotide variants
+- small insertions and deletions
+- structural variants
+- copy-number differences
+- larger rearrangements
+
+These differences matter during assembly because the assembler must decide whether two similar sequences are:
+
+- allelic versions of the same locus, one on each haplotype
+- duplicated regions that should both be present in the final assembly
+- sequencing errors that should be corrected into one consensus sequence
+
+#### Collapsed assemblies
+
+A **collapsed assembly** represents the two haplotypes as one consensus sequence for most regions.
+
+```diff
++ haplotype A:  ATGCTACGTTAG
++ haplotype B:  ATGCTATGTTAG
++ collapsed:    ATGCTA?GTTAG
+```
+
+In practice, the consensus base is chosen from the read evidence, so the output does not usually contain `?`. The important idea is that the assembly has one contig for a region where the organism actually has two haplotypic copies.
+
+Collapsed assemblies are common when:
+
+- the two haplotypes are very similar
+- read length or coverage is not sufficient to separate them
+- the assembler is configured to produce a primary consensus assembly
+
+Collapsed assemblies can be useful because they are simpler to analyze, but they can hide heterozygous variation and make some regions look artificially homozygous.
+
+#### Phased haplotype assemblies
+
+A **phased assembly** separates the two haplotypes and attempts to reconstruct each chromosome copy independently.
+
+```diff
++ haplotype A assembly:  ATGCTACGTTAG
++ haplotype B assembly:  ATGCTATGTTAG
+```
+
+This is also called a **haplotype-resolved assembly**. It is especially useful when the goal is to study heterozygosity, allele-specific genes, structural variation, or inherited chromosome blocks.
+
+Phased assemblies usually need stronger evidence than collapsed assemblies, such as:
+
+- long reads that span multiple heterozygous variants
+- high coverage
+- low sequencing error
+- parental data, Hi-C, linked reads, or other long-range information
+- assemblers designed for haplotype resolution, such as `hifiasm` for PacBio HiFi data
+
+#### Why this matters for evaluation
+
+For a haploid bacterial genome, a good assembly size should usually be close to the expected genome size. For a diploid genome, interpretation depends on the assembly type:
+
+- a collapsed primary assembly is expected to be close to one haploid genome size
+- a fully duplicated haplotype-resolved assembly can approach two haploid genome copies
+- unresolved repeats or duplicated haplotypes can inflate assembly size
+- over-collapsing can reduce assembly size and hide real variation
+
+```diff
+! DISCUSSION: If a diploid genome has an expected haploid size of 3 Gb, should a 6 Gb assembly always be considered wrong?
+! DISCUSSION: Why might a collapsed assembly miss biologically important variants?
+```
+
+### **4. Assembly Tools**
 
 Common long-read assembly tools include:
 
@@ -78,7 +149,7 @@ In this hackathon, `Flye` is the recommended first assembler.
 + For a bacterial genome, the expected genome size is approximately a few Mb
 ```
 
-### **4. Assembly Evaluation**
+### **5. Assembly Evaluation**
 
 Assembly is not finished when the assembler produces a FASTA file. We need to evaluate it.
 
@@ -103,7 +174,7 @@ Useful tools:
 - `IGV`: visual inspection of assembly-reference alignments
 - `Bandage`: graph visualization, if an assembly graph is available
 
-### **5. Reference Comparison**
+### **6. Reference Comparison**
 
 Because this dataset has a published KUN1163 reference, we can compare the assembly to:
 
@@ -119,7 +190,7 @@ This comparison helps answer:
 
 Reference comparison is useful, but it should not be treated as the only truth. If the sample and reference differ, a real biological difference can look like a disagreement.
 
-### **6. Polishing**
+### **7. Polishing**
 
 Polishing attempts to correct base-level errors in an assembly.
 
@@ -130,7 +201,7 @@ Polishing attempts to correct base-level errors in an assembly.
 
 For this session, polishing is optional. The core challenge is to produce and evaluate a first long-read assembly.
 
-### **7. Expected Deliverable**
+### **8. Expected Deliverable**
 
 Each group should produce a short report:
 
@@ -163,10 +234,11 @@ Each group should produce a short report:
 - what would you try next?
 ```
 
-### **8. Key Points**
+### **9. Key Points**
 
 - Genome assembly reconstructs contigs from reads
 - Long reads can resolve repeats and structural regions better than short reads
+- Haploid, collapsed diploid, and phased haplotype assemblies represent genome copies differently
 - Assembly quality must be evaluated after assembly
 - A good bacterial assembly should be close to the expected genome size
 - Reference comparison helps interpret completeness and structural agreement

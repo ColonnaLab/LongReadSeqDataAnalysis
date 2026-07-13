@@ -36,6 +36,19 @@ This file lists the main software used in the lessons, with links to the officia
 | SAMtools | BAM inspection, indexing, coverage and alignment summaries | https://github.com/samtools/samtools |
 | BCFtools | VCF/BCF filtering and manipulation | https://github.com/samtools/bcftools |
 
+## Genome Assembly
+
+| Software | Used for | Source / installation |
+|---|---|---|
+| Flye | Long-read genome assembly from ONT and PacBio reads | https://github.com/mikolmogorov/Flye |
+| Raven | Fast long-read genome assembly, useful for comparing assembly results | https://github.com/lbcb-sci/raven |
+| miniasm | Fast overlap-based long-read assembly; usually requires polishing | https://github.com/lh3/miniasm |
+| hifiasm | PacBio HiFi assembly and haplotype-resolved assembly workflows | https://github.com/chhylp123/hifiasm |
+| Canu / HiCanu | Long-read assembly, including HiFi-aware assembly modes | https://github.com/marbl/canu |
+| QUAST | Assembly quality assessment and reference-based assembly comparison | https://github.com/ablab/quast |
+| Bandage | Assembly graph visualization for GFA graph files | https://github.com/rrwick/Bandage |
+| IGV | Visual inspection of assembly-to-reference alignments | https://igv.org/ |
+
 ## R and Reproducible Analysis
 
 | Software | Used for | Source / installation |
@@ -69,4 +82,10 @@ Useful package pages:
 | NanoPlot | https://bioconda.github.io/recipes/nanoplot/README.html |
 | pycoQC | https://bioconda.github.io/recipes/pycoqc/README.html |
 | minimap2 | https://bioconda.github.io/recipes/minimap2/README.html |
-
+| Flye | https://bioconda.github.io/recipes/flye/README.html |
+| Raven | https://bioconda.github.io/recipes/raven-assembler/README.html |
+| miniasm | https://bioconda.github.io/recipes/miniasm/README.html |
+| hifiasm | https://bioconda.github.io/recipes/hifiasm/README.html |
+| Canu | https://bioconda.github.io/recipes/canu/README.html |
+| QUAST | https://bioconda.github.io/recipes/quast/README.html |
+| Bandage | https://bioconda.github.io/recipes/bandage/README.html |
