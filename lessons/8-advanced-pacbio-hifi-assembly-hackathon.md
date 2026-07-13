@@ -29,8 +29,8 @@ Dataset:
 Keep downloaded data in `/data/user1/data-pacbio` and write analysis results in a separate working folder.
 
 ```bash
-user1@vm-corso-colonna:~$ mkdir -p /data/user1/pacbio-working
-user1@vm-corso-colonna:~$ cd /data/user1/pacbio-working
+user1@vm-corso-colonna:~$ mkdir -p /scratch/user1/pacbio-working
+user1@vm-corso-colonna:~$ cd /scratch/user1/pacbio-working
 ```
 
 Create output folders:
@@ -39,11 +39,6 @@ Create output folders:
 user1@vm-corso-colonna:/data/user1/pacbio-working$ mkdir -p assembly assembly/hifiasm assembly/flye assembly/qc assembly/reference_comparison assembly/report
 ```
 
-Inspect the downloaded data:
-
-```bash
-user1@vm-corso-colonna:/data/user1/pacbio-working$ find /data/user1/data-pacbio -maxdepth 2 -type f | sort
-```
 
 ```diff
 ! TASK: Identify the HiFi reads file
@@ -54,7 +49,7 @@ user1@vm-corso-colonna:/data/user1/pacbio-working$ find /data/user1/data-pacbio 
 
 Expected file names used below:
 
-- reads: `/data/user1/data-pacbio/SRR10971019.fastq.gz`
+- reads: `/scratch/user1/pacbio-working/data-pacbio/ecoli_hifi.fastq
 - reference: `/data/user1/data-pacbio/NC_000913.3.fasta`
 
 If your downloaded files have different names or are inside subfolders, use the correct paths from the `find` command.
@@ -64,9 +59,10 @@ If your downloaded files have different names or are inside subfolders, use the 
 Summarize the reads:
 
 ```bash
-user1@vm-corso-colonna:/data/user1/pacbio-working$ seqkit stats \
-  /data/user1/data-pacbio/SRR10971019.fastq.gz \
-  > assembly/qc/SRR10971019.seqkit.stats.txt
+user1@vm-corso-colonna:/data/user1/pacbio-working$ seqkit stats  -a \
+ data-pacbio/ecoli_hifi.fastq \
+ > assembly/qc/ecoli.seqkit.stats.txt
+
 ```
 
 ```bash
@@ -91,8 +87,8 @@ Example: keep about 25% of the reads.
 user1@vm-corso-colonna:/data/user1/pacbio-working$ seqkit sample \
   -p 0.25 \
   -s 11 \
-  /data/user1/data-pacbio/SRR10971019.fastq.gz \
-  -o assembly/qc/SRR10971019.subsample25.fastq.gz
+   data-pacbio/ecoli_hifi.fastq \
+  -o assembly/qc/ecoli_hifi.subsample25.fastq.gz
 ```
 
 ```diff
@@ -103,7 +99,7 @@ user1@vm-corso-colonna:/data/user1/pacbio-working$ seqkit sample \
 The commands below use the full dataset. If you use the subsample, replace the reads path with:
 
 ```diff
-+ assembly/qc/SRR10971019.subsample25.fastq.gz
++ assembly/qc/ecoli_hifi.subsample25.fastq.gz
 ```
 
 ### **4. Run a First HiFi Assembly with hifiasm**
@@ -111,17 +107,17 @@ The commands below use the full dataset. If you use the subsample, replace the r
 Run `hifiasm`:
 
 ```bash
-user1@vm-corso-colonna:/data/user1/pacbio-working$ hifiasm \
+user1@vm-corso-colonna:/scratch/user1/pacbio-working$ hifiasm \
   -o assembly/hifiasm/ecoli_k12 \
   -t 4 \
-  /data/user1/data-pacbio/SRR10971019.fastq.gz \
+  data-pacbio/ecoli_hifi.fastq \
   2> assembly/hifiasm/hifiasm.log
 ```
 
 `hifiasm` writes graph files in GFA format. Convert the primary contig graph to FASTA:
 
 ```bash
-user1@vm-corso-colonna:/data/user1/pacbio-working$ awk \
+user1@vm-corso-colonna:/scratch/user1/pacbio-working$ awk \
   '/^S/{print ">"$2"\n"$3}' \
   assembly/hifiasm/ecoli_k12.bp.p_ctg.gfa \
   > assembly/hifiasm/ecoli_k12.hifiasm.p_ctg.fasta
@@ -138,8 +134,8 @@ user1@vm-corso-colonna:/data/user1/pacbio-working$ awk \
 Flye can also assemble PacBio HiFi reads.
 
 ```bash
-user1@vm-corso-colonna:/data/user1/pacbio-working$ flye \
-  --pacbio-hifi /data/user1/data-pacbio/SRR10971019.fastq.gz \
+user1@vm-corso-colonna:/scratch/user1/pacbio-working$ flye \
+  --pacbio-hifi data-pacbio/ecoli_hifi.fastq \
   --genome-size 4.64m \
   --threads 4 \
   --out-dir assembly/flye
@@ -156,13 +152,13 @@ user1@vm-corso-colonna:/data/user1/pacbio-working$ flye \
 Summarize the hifiasm FASTA:
 
 ```bash
-user1@vm-corso-colonna:/data/user1/pacbio-working$ seqkit stats \
+user1@vm-corso-colonna:/scratch/user1/pacbio-working$ seqkit stats \
   assembly/hifiasm/ecoli_k12.hifiasm.p_ctg.fasta \
   > assembly/qc/ecoli_k12.hifiasm.seqkit.stats.txt
 ```
 
 ```bash
-user1@vm-corso-colonna:/data/user1/pacbio-working$ cat assembly/qc/ecoli_k12.hifiasm.seqkit.stats.txt
+user1@vm-corso-colonna:/scratch/user1/pacbio-working$ cat assembly/qc/ecoli_k12.hifiasm.seqkit.stats.txt
 ```
 
 ```diff
@@ -178,7 +174,7 @@ user1@vm-corso-colonna:/data/user1/pacbio-working$ cat assembly/qc/ecoli_k12.hif
 Use QUAST if available:
 
 ```bash
-user1@vm-corso-colonna:/data/user1/pacbio-working$ quast.py \
+user1@vm-corso-colonna:/scratch/user1/pacbio-working$ quast.py \
   assembly/hifiasm/ecoli_k12.hifiasm.p_ctg.fasta \
   -r /data/user1/data-pacbio/NC_000913.3.fasta \
   -o assembly/reference_comparison/quast_hifiasm
@@ -193,7 +189,7 @@ user1@vm-corso-colonna:/data/user1/pacbio-working$ quast.py \
 If QUAST is not available, align the assembly to the reference:
 
 ```bash
-user1@vm-corso-colonna:/data/user1/pacbio-working$ minimap2 \
+user1@vm-corso-colonna:/scratch/user1/pacbio-working$ minimap2 \
   -ax asm5 \
   /data/user1/data-pacbio/NC_000913.3.fasta \
   assembly/hifiasm/ecoli_k12.hifiasm.p_ctg.fasta \
@@ -201,24 +197,24 @@ user1@vm-corso-colonna:/data/user1/pacbio-working$ minimap2 \
 ```
 
 ```bash
-user1@vm-corso-colonna:/data/user1/pacbio-working$ samtools sort \
+user1@vm-corso-colonna:/scratch/user1/pacbio-working$ samtools sort \
   -o assembly/reference_comparison/hifiasm_vs_reference.sorted.bam \
   assembly/reference_comparison/hifiasm_vs_reference.sam
 ```
 
 ```bash
-user1@vm-corso-colonna:/data/user1/pacbio-working$ samtools index \
+user1@vm-corso-colonna:/scratch/user1/pacbio-working$ samtools index \
   assembly/reference_comparison/hifiasm_vs_reference.sorted.bam
 ```
 
 ```bash
-user1@vm-corso-colonna:/data/user1/pacbio-working$ samtools coverage \
+user1@vm-corso-colonna:/scratch/user1/pacbio-working$ samtools coverage \
   assembly/reference_comparison/hifiasm_vs_reference.sorted.bam \
   > assembly/reference_comparison/hifiasm_vs_reference.coverage.txt
 ```
 
 ```bash
-user1@vm-corso-colonna:/data/user1/pacbio-working$ cat assembly/reference_comparison/hifiasm_vs_reference.coverage.txt
+user1@vm-corso-colonna:/scratch/user1/pacbio-working$ cat assembly/reference_comparison/hifiasm_vs_reference.coverage.txt
 ```
 
 ```diff
