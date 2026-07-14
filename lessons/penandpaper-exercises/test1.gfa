@@ -1,0 +1,24 @@
+H	VN:Z:1.0
+S	1	ATTC
+S	2	G
+S	3	T
+S	4	TCA
+S	5	A
+S	6	T
+S	7	TC
+S	8	CAG
+L	1	+	2	+	0M
+L	1	+	3	+	0M
+L	2	+	4	+	0M
+L	3	+	4	+	0M
+L	4	+	5	+	0M
+L	4	+	6	+	0M
+L	5	+	7	+	0M
+L	6	+	7	+	0M
+L	1	+	8	+	0M
+L	8	+	4	+	0M
+
+
+
+
+
