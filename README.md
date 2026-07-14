@@ -20,6 +20,7 @@ Course material for a Practical Course at the [University of Bari](https://www.u
 | **[Day 6 - Long read alignment](lessons/5-longreads-alignment.md)** | 2026/07/08 | Long-read alignment<br>[Exercise](lessons/5-longreads-alignment-exercise.md) | Review Day 5 lesson |
 | **[Day 7 - Long-read variant calling](lessons/6-longreads-variantcalling.md)** | 2026/07/10 | Long-read variant calling with Clair3 and DeepVariant<br>[Exercise](lessons/6-longreads-variantcalling-exercise.md) | Review Day 6 lesson |
 | **Day 8 - Advanced assembly hackathon** | 2026/07/13 | [Advanced ONT assembly](lessons/7-advanced-longread-assembly.md)<br>[ONT assembly hackathon brief](lessons/7-advanced-longread-assembly-hackathon.md)<br>[Advanced PacBio HiFi assembly](lessons/8-advanced-pacbio-hifi-assembly.md)<br>[PacBio HiFi assembly hackathon brief](lessons/8-advanced-pacbio-hifi-assembly-hackathon.md) | Comfortable with lessons 4-7 |
+| **[Day 9 - Pangenomics](lessons/9-pangenomics.md)** | 2026/07/14 | Build pangenome graphs with PGGB, inspect and manipulate graphs with ODGI, and map reads/call variants with VG Giraffe<br>[Hackathon brief](lessons/9-pangenomics-hackathon.md) | Review lessons 7-8 |
 | **Extra** | - | [R for reproducible data analysis](https://swcarpentry.github.io/r-novice-gapminder/) | Install [R](https://www.r-project.org/) (latest version)<br>Install [RStudio Desktop](https://www.rstudio.com/products/rstudio/download/#download) |
 
 ### Advanced / Hackathon Module
@@ -29,6 +30,7 @@ Course material for a Practical Course at the [University of Bari](https://www.u
 |:---:|:----:|------|---------------------|
 | **[7 - Advanced ONT assembly](lessons/7-advanced-longread-assembly.md)** | TBD | Assemble the MRSA KUN1163 genome from ONT reads and evaluate chromosome/plasmid recovery<br>[Hackathon brief](lessons/7-advanced-longread-assembly-hackathon.md) | Comfortable with lessons 4-6 |
 | **[8 - Advanced PacBio HiFi assembly](lessons/8-advanced-pacbio-hifi-assembly.md)** | TBD | Assemble *E. coli* K-12 from PacBio HiFi reads and compare to reference `NC_000913.3`<br>[Hackathon brief](lessons/8-advanced-pacbio-hifi-assembly-hackathon.md) | Comfortable with lesson 7 |
+| **[9 - Pangenomics](lessons/9-pangenomics.md)** | 2026/07/14 | Build and inspect pangenome graphs, then use VG Giraffe read mapping and graph-based variant calling<br>[Hackathon brief](lessons/9-pangenomics-hackathon.md) | Comfortable with lessons 7-8 |
 
 #### Acknowledgments
 This course material includes content adapted from [Software Carpentry](https://software-carpentry.org/) 

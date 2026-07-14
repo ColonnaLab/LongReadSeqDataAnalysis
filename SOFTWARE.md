@@ -49,6 +49,18 @@ This file lists the main software used in the lessons, with links to the officia
 | Bandage | Assembly graph visualization for GFA graph files | https://github.com/rrwick/Bandage |
 | IGV | Visual inspection of assembly-to-reference alignments | https://igv.org/ |
 
+## Pangenomics and Genome Graphs
+
+| Software | Used for | Source / installation |
+|---|---|---|
+| PGGB | Building pangenome variation graphs from genome assemblies | https://github.com/pangenome/pggb |
+| wfmash | Whole-genome pairwise alignment used by pangenome graph workflows | https://github.com/waveygang/wfmash |
+| seqwish | Constructing variation graphs from all-vs-all alignments | https://github.com/ekg/seqwish |
+| smoothxg | Pangenome graph normalization, smoothing, and POA consensus steps | https://github.com/pangenome/smoothxg |
+| gfaffix | Graph normalization and removal of redundant graph overlaps in GFA | https://github.com/marschall-lab/GFAffix |
+| ODGI | Inspecting, sorting, manipulating, and visualizing pangenome graphs | https://github.com/pangenome/odgi |
+| VG | Genome graph indexing, graph read mapping with `vg giraffe`, and graph-based variant calling | https://github.com/vgteam/vg |
+
 ## R and Reproducible Analysis
 
 | Software | Used for | Source / installation |
@@ -89,3 +101,10 @@ Useful package pages:
 | Canu | https://bioconda.github.io/recipes/canu/README.html |
 | QUAST | https://bioconda.github.io/recipes/quast/README.html |
 | Bandage | https://bioconda.github.io/recipes/bandage/README.html |
+| PGGB | https://bioconda.github.io/recipes/pggb/README.html |
+| wfmash | https://bioconda.github.io/recipes/wfmash/README.html |
+| seqwish | https://bioconda.github.io/recipes/seqwish/README.html |
+| smoothxg | https://bioconda.github.io/recipes/smoothxg/README.html |
+| gfaffix | https://bioconda.github.io/recipes/gfaffix/README.html |
+| ODGI | https://bioconda.github.io/recipes/odgi/README.html |
+| VG | https://bioconda.github.io/recipes/vg/README.html |
