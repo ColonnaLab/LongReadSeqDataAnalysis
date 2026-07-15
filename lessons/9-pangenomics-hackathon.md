@@ -2,7 +2,9 @@
 
 ## Advanced 3: Pangenomics hackathon
 
-This practical is a three-hour small-group session on pangenome graph construction, graph inspection, and graph-based read mapping for variant calling.
+This practical is a three-hour small-group session on pangenome graph construction and graph inspection.
+
+Graph-based variant calling continues in [the pangenomics variant-calling hackathon brief](10-pangenomics-variantcalling-hackathon.md).
 
 The data used for this tutorial come from the [PGGB GitHub repository](https://github.com/pangenome/pggb/), specifically the `data/LPA` example dataset.
 
@@ -11,14 +13,12 @@ Dataset assumed on the server:
 - source repository: `https://github.com/pangenome/pggb.git`
 - source dataset inside the repository: `data/LPA`
 - downloaded dataset: `/scratch/user1/data-pangenome/LPA`
-- optional paired reads: `/scratch/user1/data-pangenome/reads/sample_R1.fastq.gz`
-- optional paired reads: `/scratch/user1/data-pangenome/reads/sample_R2.fastq.gz`
 - working directory: `/scratch/user1/pangenome-working`
 
 ```diff
 + You should document graph-building parameters
-+ You should inspect graph structure before variant interpretation
-+ You should distinguish graph construction, read mapping, and variant calling
++ You should inspect graph structure before downstream interpretation
++ You should identify graph paths that could be used as coordinate systems later
 ```
 
 ### **1. Prepare the Working Directory**
@@ -60,7 +60,6 @@ user1@vm-corso-colonna:/scratch/user1/pangenome-working$ ls -lh /scratch/user1/d
 
 ```diff
 ! TASK: Confirm that the assembly FASTA exists
-! TASK: Confirm whether optional read files are available
 ! TASK: Check free disk space before graph construction
 ```
 
@@ -113,7 +112,7 @@ user1@vm-corso-colonna:/scratch/user1/pangenome-working$ wc -l data-pangenome/LP
 ```diff
 ! TASK: How many sequences are in the input FASTA?
 ! TASK: Do the names identify sample, haplotype, and contig?
-! TASK: Which path should be treated as the reference for VCF interpretation?
+! TASK: Which path could be treated as a reference coordinate system later?
 ```
 
 ### **3. Build a Pangenome Graph with PGGB**
@@ -217,7 +216,7 @@ Command parameters:
 ! TASK: Which path will you use as a reference coordinate system?
 ```
 
-In the variant-calling commands below, replace `ACTUAL_PATH_NAME` with one path from the graph path list.
+Record one candidate reference path for the variant-calling lesson.
 
 ### **5. Sort and Visualize the Graph**
 
@@ -259,74 +258,7 @@ Command parameters:
 ! TASK: Decide whether the graph appears mostly simple or highly complex
 ```
 
-### **6. Build VG Giraffe Indexes**
-
-Use `vg autoindex` to prepare indexes for graph read mapping:
-
-```bash
-user1@vm-corso-colonna:/scratch/user1/pangenome-working$ vg autoindex \
-  --workflow giraffe \
-  -g graph/pggb/*.seqwish.gfa \
-  -p graph/vg/pangenome \
-  -t 4
-```
-
-Command parameters:
-
-- `--workflow giraffe`: build the graph indexes needed by `vg giraffe`
-- `-g graph/pggb/*.seqwish.gfa`: input GFA graph
-- `-p graph/vg/pangenome`: prefix for output index files
-- `-t 4`: number of CPU threads
-
-Check generated files:
-
-```bash
-user1@vm-corso-colonna:/scratch/user1/pangenome-working$ ls -lh graph/vg
-```
-
-```diff
-! TASK: Was a GBZ graph produced?
-! TASK: Were minimizer and distance indexes produced?
-! TASK: Why does vg giraffe need graph indexes before mapping?
-```
-
-### **7. Deconstruct Graph Variation from Paths**
-
-Infer variants directly from graph paths using the selected reference path.
-
-First list the path names available in the VG graph:
-
-```bash
-user1@vm-corso-colonna:/scratch/user1/pangenome-working$ vg paths \
-  -x graph/vg/pangenome.giraffe.gbz \
-  -L \
-  > graph/qc/vg.paths.txt
-
-user1@vm-corso-colonna:/scratch/user1/pangenome-working$ head graph/qc/vg.paths.txt
-```
-
-Choose one path from `graph/qc/vg.paths.txt` and use it after `-p`. Do not copy `ACTUAL_PATH_NAME` literally.
-
-```bash
-user1@vm-corso-colonna:/scratch/user1/pangenome-working$ vg deconstruct \
-  graph/vg/pangenome.giraffe.gbz \
-  -p 'ACTUAL_PATH_NAME' \
-  > graph/vg/pangenome.path_variants.vcf
-```
-
-Command parameters:
-
-- `graph/vg/pangenome.giraffe.gbz`: graph containing embedded assembly paths
-- `-p 'ACTUAL_PATH_NAME'`: graph path to use as the reference coordinate system
-- `>`: write path-derived variants to a VCF file
-
-```diff
-! TASK: How many path-derived variant records were produced?
-! TASK: Which reference path or coordinate system appears in the VCF?
-! TASK: These calls come from assembled genomes. How is that different from read-supported calls?
-```
-
-### **8. Final Report**
+### **6. Final Report**
 
 Prepare a short group report:
 
@@ -359,138 +291,13 @@ Use this template:
 - number of paths:
 - main observations from visualization:
 
-## Graph/path-derived variant calling
-- VCF file:
-- number of records:
-- coordinate/reference path:
-- interpretation limits:
-
-## Optional read-supported analysis
-- read files:
-- VG Giraffe mapping summary:
-- read-supported VCF:
-- read-supported variant count:
-
 ## Interpretation
 - what worked?
 - what was uncertain?
 - what would we change in the graph build?
+- which graph path could be used as a reference coordinate system later?
 ```
 
 ```diff
-! FINAL TASK: Explain how pangenome graph variant calling differs from linear-reference variant calling
-```
-
-### **9. Optional: Map Reads to the Pangenome Graph**
-
-The LPA dataset provides assemblies for graph construction. If matching read files are available for the course, use their paths in `vg giraffe`.
-
-Single-end read example:
-
-```bash
-user1@vm-corso-colonna:/scratch/user1/pangenome-working$ vg giraffe \
-  -Z graph/vg/pangenome.giraffe.gbz \
-  -m graph/vg/pangenome.min \
-  -d graph/vg/pangenome.dist \
-  -f data-pangenome/reads/sample.fastq.gz \
-  -t 4 \
-  > graph/vg/sample.gam
-```
-
-Command parameters:
-
-- `-Z graph/vg/pangenome.giraffe.gbz`: indexed graph used for mapping
-- `-m graph/vg/pangenome.min`: minimizer index used to seed read mapping
-- `-d graph/vg/pangenome.dist`: distance index used to evaluate graph distances between seeds
-- `-f data-pangenome/reads/sample.fastq.gz`: single-end input FASTQ
-- `-t 4`: number of CPU threads
-- `>`: write alignments to a GAM file
-
-Paired-end read example:
-
-```bash
-user1@vm-corso-colonna:/scratch/user1/pangenome-working$ vg giraffe \
-  -Z graph/vg/pangenome.giraffe.gbz \
-  -m graph/vg/pangenome.min \
-  -d graph/vg/pangenome.dist \
-  -f data-pangenome/reads/sample_R1.fastq.gz \
-  -f data-pangenome/reads/sample_R2.fastq.gz \
-  -t 4 \
-  > graph/vg/sample.gam
-```
-
-For paired-end data, use two `-f` options: the first for read 1 and the second for read 2.
-
-Basic alignment QC:
-
-```bash
-user1@vm-corso-colonna:/scratch/user1/pangenome-working$ vg stats \
-  -a \
-  graph/vg/sample.gam \
-  > graph/qc/sample.gam.stats.txt
-
-user1@vm-corso-colonna:/scratch/user1/pangenome-working$ cat graph/qc/sample.gam.stats.txt
-```
-
-Command parameters:
-
-- `-a`: report alignment statistics for the GAM file
-- `graph/vg/sample.gam`: graph alignment file produced by `vg giraffe`
-
-```diff
-! OPTIONAL TASK: Did reads map to the graph?
-! OPTIONAL TASK: Are there unmapped reads?
-! OPTIONAL TASK: What could cause poor graph mapping?
-```
-
-### **10. Optional: Compute Read Support and Call Variants**
-
-Compute graph read support:
-
-```bash
-user1@vm-corso-colonna:/scratch/user1/pangenome-working$ vg pack \
-  -x graph/vg/pangenome.giraffe.gbz \
-  -g graph/vg/sample.gam \
-  -Q 5 \
-  -o graph/vg/sample.pack
-```
-
-Command parameters:
-
-- `-x graph/vg/pangenome.giraffe.gbz`: graph to accumulate read support on
-- `-g graph/vg/sample.gam`: read alignments from `vg giraffe`
-- `-Q 5`: minimum mapping quality for reads to contribute support
-- `-o graph/vg/sample.pack`: output support file used by `vg call`
-
-Call variants from read support:
-
-```bash
-user1@vm-corso-colonna:/scratch/user1/pangenome-working$ vg call \
-  graph/vg/pangenome.giraffe.gbz \
-  -k graph/vg/sample.pack \
-  -a \
-  -p 'ACTUAL_PATH_NAME' \
-  -s sample \
-  > graph/vg/sample.graph_calls.vcf
-```
-
-Command parameters:
-
-- `graph/vg/pangenome.giraffe.gbz`: graph to call variants from
-- `-k graph/vg/sample.pack`: read support generated by `vg pack`
-- `-a`: call all snarls, including reference calls
-- `-p 'ACTUAL_PATH_NAME'`: graph path to use as the VCF reference coordinate system
-- `-s sample`: sample name to write in the VCF
-- `>`: write variant calls to a VCF file
-
-Inspect the VCF:
-
-```bash
-user1@vm-corso-colonna:/scratch/user1/pangenome-working$ grep -v '^##' graph/vg/sample.graph_calls.vcf | head
-```
-
-```diff
-! OPTIONAL TASK: How many read-supported variant records were produced?
-! OPTIONAL TASK: Which reference path or coordinate system appears in the VCF?
-! OPTIONAL TASK: Compare read-supported variants with path-derived variants
+! FINAL TASK: Explain how graph construction choices could affect downstream variant interpretation
 ```

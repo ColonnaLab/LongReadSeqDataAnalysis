@@ -1,10 +1,11 @@
 [back to course home page ](../README.md)
 
-## Advanced 3: Pangenomics and graph-based variant calling
+## Advanced 3: Pangenomics
 
-This three-hour session introduces pangenome graph analysis. The goal is to build a small pangenome graph from genome assemblies, inspect and manipulate it, and use graph-aware read mapping to support variant calling.
+This three-hour session introduces pangenome graph analysis. The goal is to build a small pangenome graph from genome assemblies, then inspect and manipulate it with graph-aware tools.
 
 The practical challenge is in [the pangenomics hackathon brief](9-pangenomics-hackathon.md).
+Graph-based variant calling is covered in [the pangenomics variant-calling lesson](10-pangenomics-variantcalling.md).
 
 Dataset assumed for the practical:
 
@@ -12,14 +13,12 @@ Dataset assumed for the practical:
 - source dataset inside the repository: `data/LPA`
 - server data folder after download: `/scratch/user1/data-pangenome/LPA`
 - input assembly FASTA: selected from the LPA folder during the practical
-- optional paired reads: provided separately if read mapping with `vg giraffe` is run
-- reference path name for VCF output: decided from the graph path list
+- reference path name for downstream variant interpretation: decided from the graph path list
 
 ```diff
 + We will build a pangenome graph from multiple assemblies
 + We will inspect graph paths, size, and topology with odgi
-+ We will prepare graph indexes for vg giraffe
-+ We will map reads to the graph and use read support for variant calling
++ We will decide which graph path could be used as a reference coordinate system later
 ```
 
 ### **1. What Is a Pangenome?**
@@ -163,69 +162,10 @@ odgi viz \
   -y 600
 ```
 
-### **5. Variant Calling from a Pangenome Graph**
-
-There are two related but different tasks:
-
-- call variants directly from graph paths, using the assembled genomes embedded in the graph
-- map reads to the graph and use read support to genotype or call variants
-
-`vg giraffe` is a graph-aware read mapper. It does not call variants by itself. A typical read-supported workflow is:
-
-```diff
-+ pangenome graph -> vg indexes -> vg giraffe mapping -> vg pack -> vg call -> VCF
-```
-
-Build Giraffe indexes from a GFA graph:
-
-```bash
-vg autoindex \
-  --workflow giraffe \
-  -g graph/pggb/*.seqwish.gfa \
-  -p graph/vg/pangenome \
-  -t 4
-```
-
-Map paired reads:
-
-```bash
-vg giraffe \
-  -Z graph/vg/pangenome.giraffe.gbz \
-  -m graph/vg/pangenome.min \
-  -d graph/vg/pangenome.dist \
-  -f data-pangenome/reads/sample_R1.fastq.gz \
-  -f data-pangenome/reads/sample_R2.fastq.gz \
-  -t 4 \
-  > graph/vg/sample.gam
-```
-
-Compute read support and call variants:
-
-```bash
-vg pack \
-  -x graph/vg/pangenome.giraffe.gbz \
-  -g graph/vg/sample.gam \
-  -Q 5 \
-  -o graph/vg/sample.pack
-
-vg call \
-  graph/vg/pangenome.giraffe.gbz \
-  -k graph/vg/sample.pack \
-  -a \
-  -p REFERENCE_PATH_NAME \
-  -s sample \
-  > graph/vg/sample.graph_calls.vcf
-```
-
-The value passed to `-p` must be replaced with the reference path selected from the graph. The VCF coordinates depend on graph paths and reference path selection, so students should inspect path names before interpreting variant coordinates.
-
-
-
-### **6. Key Points**
+### **5. Key Points**
 
 - A pangenome represents diversity across multiple genomes, not only one reference sequence
 - A graph stores shared and variable sequence in one structure
 - PGGB builds pangenome graphs from assembled sequences
 - ODGI is useful for graph inspection, manipulation, and visualization
-- VG Giraffe maps reads to a graph; read-supported calls require downstream `vg pack` and `vg call`
-- Variant interpretation depends on the chosen reference path and graph construction choices
+- Downstream variant interpretation depends on the chosen reference path and graph construction choices
