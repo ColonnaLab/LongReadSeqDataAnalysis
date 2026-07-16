@@ -76,10 +76,10 @@ Simplified bubble:
 haplotype 1 carries Allele 1: SNP 
 haplotype 2 carries Allele 2: deletion
 
-        + PanGenie bubble genotype:
++ PanGenie bubble genotype:
         1|2
 
-        + Biallelic callset genotypes:
++ Biallelic callset genotypes:
         SNP_A       1|0    haplotype 1 has SNP_A, haplotype 2 does not
         deletion_C  0|1    haplotype 1 does not have deletion_C, haplotype 2 has it
 ```
