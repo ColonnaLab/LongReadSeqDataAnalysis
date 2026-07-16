@@ -55,23 +55,26 @@ The biallelic callset VCF decomposes those complex bubble records into one recor
 
 Example:
 
-```text
+```diff
 Bubble paths:
 Allele 0: reference sequence
-Allele 1: SNP_A + SNP_B
-Allele 2: deletion_C
+Allele 1: SNP
+Allele 2: deletion
 
 Simplified bubble:
 
-               / --Allele 0: reference path--\
-              /                               \
-left flank --+-- Allele 1: SNP_A             -----+-- right flank
-              \                              /
-               \-- Allele 2: deletion_C ----/
+                   Allele 0 reference path
+                        /--- A----\
+                       /           \
+       left flank --+--------T--------+-- right flank
+                       \           /
+                        \---------/
+                     Allele 2: deletion
 
-Individual haplotypes:
-haplotype 1 carries Allele 1: SNP_A 
-haplotype 2 carries Allele 2: deletion_C
+
++ Individual haplotypes:
+haplotype 1 carries Allele 1: SNP 
+haplotype 2 carries Allele 2: deletion
 
         + PanGenie bubble genotype:
         1|2

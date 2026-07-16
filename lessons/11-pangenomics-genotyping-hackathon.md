@@ -184,12 +184,26 @@ user1@vm-corso-colonna:/scratch/user1/pangenie-working$ PanGenie \
   -e 10
 ```
 
+Command parameters:
+
+- `-f indexes/genotypes`: prefix of the index files produced earlier by `PanGenie-index -o indexes/genotypes`
+- `-i data-pangenie/NA19189_chr5:50200000-50400000.fasta`: input sequence file for the sample being genotyped; replace the sample name for `NA19190` and `NA19191`
+- `-o genotypes/NA19189_pangenie_multi`: output prefix; PanGenie will write files using this prefix, including `NA19189_pangenie_multi_genotyping.vcf`
+- `-t 1`: number of threads for the main genotyping algorithm
+- `-j 1`: number of threads for k-mer counting
+- `-s NA19189`: sample name written into the output VCF; change this to match each sample
+- `-e 10`: Jellyfish hash size setting used for this small workshop example
+
+In this section, the command is run once per sample. The index from section 3 is reused, but the `-i`, `-o`, and `-s` values change for each sample.
+
 Inspect the genotype outputs:
 
 ```bash
 user1@vm-corso-colonna:/scratch/user1/pangenie-working$ ls -lh genotypes
 user1@vm-corso-colonna:/scratch/user1/pangenie-working$ less -S genotypes/NA19189_pangenie_multi_genotyping.vcf
 ```
+
+The `*_histogram.histo` file is a k-mer abundance histogram for the sample sequence data. It is not another genotype or variant file. PanGenie creates it while counting sample k-mers and uses it to estimate k-mer coverage before calculating genotype probabilities.
 
 ```diff
 ! TASK: Which output files were produced for each sample?
@@ -249,7 +263,44 @@ user1@vm-corso-colonna:/scratch/user1/pangenie-working$ bcftools view genotypes/
 ! TASK: Record one genotype example from each sample
 ```
 
-### **6. Report**
+### **6. Merge the Per-Sample VCF Files**
+
+After converting each sample to a compressed and indexed biallelic VCF, merge the three samples into one multi-sample VCF:
+
+```bash
+user1@vm-corso-colonna:/scratch/user1/pangenie-working$ bcftools merge \
+  genotypes/NA19189_pangenie_bi_genotyping.vcf.gz \
+  genotypes/NA19190_pangenie_bi_genotyping.vcf.gz \
+  genotypes/NA19191_pangenie_bi_genotyping.vcf.gz \
+  -Oz \
+  -o genotypes/pangenie_bi_merged.vcf.gz
+
+user1@vm-corso-colonna:/scratch/user1/pangenie-working$ tabix -p vcf genotypes/pangenie_bi_merged.vcf.gz
+```
+
+Command parameters:
+
+- `bcftools merge`: combine VCF files that contain the same variant records but different samples
+- `genotypes/NA19189_pangenie_bi_genotyping.vcf.gz`: one compressed and indexed single-sample VCF
+- `-Oz`: write compressed VCF output
+- `-o genotypes/pangenie_bi_merged.vcf.gz`: output merged multi-sample VCF
+- `tabix -p vcf`: create an index for the merged compressed VCF
+
+Inspect the merged VCF:
+
+```bash
+user1@vm-corso-colonna:/scratch/user1/pangenie-working$ ls -lh genotypes/pangenie_bi_merged.vcf.gz*
+user1@vm-corso-colonna:/scratch/user1/pangenie-working$ bcftools query -l genotypes/pangenie_bi_merged.vcf.gz
+user1@vm-corso-colonna:/scratch/user1/pangenie-working$ bcftools view genotypes/pangenie_bi_merged.vcf.gz | less -S
+```
+
+```diff
+! TASK: Which samples are present in the merged VCF?
+! TASK: How many variant records are in the merged VCF?
+! TASK: Choose one variant and compare the genotypes across NA19189, NA19190, and NA19191
+```
+
+### **7. Report**
 
 Prepare a short report:
 
@@ -278,8 +329,13 @@ Prepare a short report:
 - converted VCF:
 - index file:
 - example genotype:
+
+## Merged VCF
+- merged VCF:
+- samples:
+- example variant across samples:
 ```
 
-### **7. Credit**
+### **8. Credit**
 
 This practical is adapted from the [PanGenie workshop](https://pangenie-workshop.readthedocs.io/en/latest/index.html) by Jana Ebler.

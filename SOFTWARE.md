@@ -60,6 +60,7 @@ This file lists the main software used in the lessons, with links to the officia
 | gfaffix | Graph normalization and removal of redundant graph overlaps in GFA | https://github.com/marschall-lab/GFAffix |
 | ODGI | Inspecting, sorting, manipulating, and visualizing pangenome graphs | https://github.com/pangenome/odgi |
 | VG | Genome graph indexing, graph read mapping with `vg giraffe`, and graph-based variant calling | https://github.com/vgteam/vg |
+| PanGenie | Pangenome-based genotyping from known haplotypes and sample k-mer counts | https://github.com/eblerjana/pangenie  https://pangenie.readthedocs.io/en/latest/index.html |
 
 ## R and Reproducible Analysis
 
@@ -108,3 +109,4 @@ Useful package pages:
 | gfaffix | https://bioconda.github.io/recipes/gfaffix/README.html |
 | ODGI | https://bioconda.github.io/recipes/odgi/README.html |
 | VG | https://bioconda.github.io/recipes/vg/README.html |
+| PanGenie | https://bioconda.github.io/recipes/pangenie/README.html |
