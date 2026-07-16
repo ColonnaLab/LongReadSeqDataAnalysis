@@ -30,6 +30,7 @@ Course material for a Practical Course at the [University of Bari](https://www.u
 | **[8 - Advanced PacBio HiFi assembly](lessons/8-advanced-pacbio-hifi-assembly.md)** | TBD | Assemble *E. coli* K-12 from PacBio HiFi reads and compare to reference `NC_000913.3`<br>[Hackathon brief](lessons/8-advanced-pacbio-hifi-assembly-hackathon.md) | Comfortable with lesson 7 |
 | **[9 - Pangenomics](lessons/9-pangenomics.md)** | 2026/07/14 | Build and inspect pangenome graphs with PGGB and ODGI<br>[Hackathon brief](lessons/9-pangenomics-hackathon.md) | Comfortable with lessons 7-8 |
 | **[10 - Pangenomics variant calling](lessons/10-pangenomics-variantcalling.md)** | 2026/07/15 | Use VG Giraffe read mapping and graph-based variant calling<br>[Hackathon brief](lessons/10-pangenomics-variantcalling-hackathon.md) | Complete lesson 9 |
+| **[11 - Pangenomics genotyping](lessons/11-pangenomics-genotyping.md)** | TBD | Follow the PanGenie workshop for pangenome-based genotyping<br>[Hackathon brief](lessons/11-pangenomics-genotyping-hackathon.md) | Complete lesson 10 |
 
 #### Acknowledgments
 This course material includes content adapted from [Software Carpentry](https://software-carpentry.org/) 
