@@ -32,7 +32,7 @@ user1@vm-corso-colonna:~$ cd /scratch/user1/pangenie-working
 Create a link to the PanGenie data:
 
 ```bash
-user1@vm-corso-colonna:/scratch/user1/pangenie-working$ ln -s /scratch/user1/data-pangenie data-pangenie
+user1@vm-corso-colonna:/scratch/user1/pangenie-working$ ln -s /scratchs/data-pangenie data-pangenie
 ```
 
 Check that the expected files are present:

@@ -2,7 +2,7 @@
 
 ## Advanced 5: Pangenomics Genotyping with PanGenie
 
-This short session follows the [PanGenie workshop](https://pangenie-workshop.readthedocs.io/en/latest/index.html), adapted to the course server and workspace.
+This lesson is adapted from the [PanGenie workshop](https://pangenie-workshop.readthedocs.io/en/latest/index.html) by Jana Ebler, adapted to the course server and workspace.
 
 The practical challenge is in [the pangenomics genotyping hackathon brief](11-pangenomics-genotyping-hackathon.md).
 
@@ -93,4 +93,3 @@ The biological result is the same, but the level of representation is different:
 
 ### **4. Credit**
 
-This lesson is adapted from the [PanGenie workshop](https://pangenie-workshop.readthedocs.io/en/latest/index.html) by Jana Ebler.
