@@ -300,6 +300,10 @@ user1@vm-corso-colonna:/scratch/user1/pangenie-working$ bcftools view genotypes/
 ! TASK: Choose one variant and compare the genotypes across NA19189, NA19190, and NA19191
 ```
 
+Final workflow summary:
+
+![PanGenie workflow summary](../img/pangenieworkflow.png)
+
 ### **7. Report**
 
 Prepare a short report:
